@@ -7,7 +7,6 @@
 		<link rel="stylesheet" href="assets/css/menu.css" />
 		<div class="wp-block-spacer" aria-hidden="true"></div>
 		
-		<!-- 追加のレシピ用簡易CSS（ボタンと検索バーのみ、既存のデザインを邪魔しません） -->
 		<style>
 			.recipe-controls {
 				margin: 20px auto;
@@ -37,9 +36,9 @@
 				border-radius: 4px;
 				font-size: 16px;
 			}
-			/* 初期状態は日韓両方表示（JSで制御） */
+
 			.lang-ja, .lang-ko { display: block; }
-			/* サブ箇条書きの調整 */
+
 			.recipe-detail {
 				font-size: 0.85em;
 				color: #555;
@@ -62,7 +61,7 @@
 			</div>
 		</header>
 
-		<!-- 言語切り替え＆検索バーコントロール -->
+
 		<div class="recipe-controls">
 			<div class="lang-buttons">
 				<button onclick="switchLanguage('ja')" id="btn-ja" class="active">日本語</button>
@@ -301,7 +300,7 @@
 
 			<div class="recipe-item" data-keywords-ja="쇼요주린 照葉樹林 しょうようじゅりん 抹茶 抹茶リキュール ウーロン茶" data-keywords-ko="쇼요주린 말차 리큐르 우롱차">
 				<dl>
-					<dt class="lang-ja">照葉樹林 (ショウヨウジュリン)</dt><dt class="lang-ko">쇼요주린</dt>
+					<dt class="lang-ja">照葉樹林</dt><dt class="lang-ko">쇼요주린</dt>
 					<dd class="lang-ja">抹茶リキュール 30ml + ウーロン茶</dd>
 					<dd class="lang-ko">말차 리큐르 30ml + 우롱차</dd>
 				</dl>
@@ -385,7 +384,7 @@
 		     ========================================== -->
 		
 		<div class="menu recipe-section">
-			<h3>안주 おつまみ (ス낵류)</h3>
+			<h3>안주 おつまみ</h3>
 
 			<div class="recipe-item" data-keywords-ja="枝豆 えだまめ 1番皿 適量 解凍 冷凍 電子レンジ 塩" data-keywords-ko="에다마메 1번 접시 적당량 해동 전자레인지 냉동 소금">
 				<dl>
@@ -451,10 +450,10 @@
 			</div>
 		</div>
 
-		<!-- Scripts -->
+
 		<script src="assets/js/main.js"></script>
 
-		<!-- レシピ言語切り替え＆検索動的スクリプト -->
+
 		<script>
 			let currentLang = 'ja';
 
@@ -500,7 +499,7 @@
 				});
 			}
 
-			// ページ読み込み時に初期初期化（デフォルト日本語）
+
 			window.addEventListener('DOMContentLoaded', () => {
 				switchLanguage('ja');
 			});
