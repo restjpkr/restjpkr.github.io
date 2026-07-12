@@ -1,0 +1,67 @@
+<div class="recipe-container">
+  <div class="lang-switch">
+    <button onclick="switchLanguage('ja')">日本語</button>
+    <button onclick="switchLanguage('ko')">한국어</button>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="recipeSearch" onkeyup="filterRecipes()" placeholder="レシピを検索... / レシピ 검색...">
+  </div>
+
+  <div id="recipeList">
+    <div class="recipe-card" data-name-ja="キムチチゲ" data-name-ko="김치찌개">
+      <h3 class="lang-ja">キムチチゲのレシピ</h3>
+      <h3 class="lang-ko">김치찌개 레시피</h3>
+      
+      <p class="lang-ja">材料：キムチ、豚肉、豆腐...</p>
+      <p class="lang-ko">재료: 김치, 돼지고기, 두부...</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* 言語の初期表示制御 */
+  .lang-ko { display: none; }
+  
+  /* 簡単なスタイリング */
+  .recipe-container { padding: 20px; max-width: 600px; margin: 0 auto; }
+  .lang-switch { margin-bottom: 15px; text-align: right; }
+  .lang-switch button { padding: 5px 10px; cursor: pointer; }
+  .search-box input { width: 100%; padding: 10px; margin-bottom: 20px; box-sizing: border-box; }
+  .recipe-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
+</style>
+
+<script>
+  let currentLang = 'ja';
+
+  // 言語切り替え機能
+  function switchLanguage(lang) {
+    currentLang = lang;
+    if (lang === 'ja') {
+      document.querySelectorAll('.lang-ja').forEach(el => el.style.display = 'block');
+      document.querySelectorAll('.lang-ko').forEach(el => el.style.display = 'none');
+      document.getElementById('recipeSearch').placeholder = 'レシピを検索...';
+    } else {
+      document.querySelectorAll('.lang-ja').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.lang-ko').forEach(el => el.style.display = 'block');
+      document.getElementById('recipeSearch').placeholder = '레시피 검색...';
+    }
+    filterRecipes(); // 言語切り替え時にも検索フィルターを再適用
+  }
+
+  // 検索機能
+  function filterRecipes() {
+    const input = document.getElementById('recipeSearch').value.toLowerCase();
+    const cards = document.querySelectorAll('.recipe-card');
+
+    cards.forEach(card => {
+      // 選択されている言語に応じた検索対象属性を取得
+      const name = card.getAttribute(`data-name-${currentLang}`).toLowerCase();
+      if (name.includes(input)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+</script>
