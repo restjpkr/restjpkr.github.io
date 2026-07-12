@@ -1,34 +1,195 @@
 <div class="recipe-container">
+  <!-- 言語切り替えボタン -->
   <div class="lang-switch">
-    <button onclick="switchLanguage('ja')">日本語</button>
-    <button onclick="switchLanguage('ko')">한국어</button>
+    <button onclick="switchLanguage('ja')" id="btn-ja" class="active">日本語</button>
+    <button onclick="switchLanguage('ko')" id="btn-ko">한국어</button>
   </div>
 
+  <!-- 検索バー -->
   <div class="search-box">
-    <input type="text" id="recipeSearch" onkeyup="filterRecipes()" placeholder="レシピを検索... / レシピ 검색...">
+    <input type="text" id="recipeSearch" onkeyup="filterRecipes()" placeholder="レシピを検索...">
   </div>
 
+  <!-- レシピリスト -->
   <div id="recipeList">
-    <div class="recipe-card" data-name-ja="キムチチゲ" data-name-ko="김치찌개">
-      <h3 class="lang-ja">キムチチゲのレシピ</h3>
-      <h3 class="lang-ko">김치찌개 레시피</h3>
-      
-      <p class="lang-ja">材料：キムチ、豚肉、豆腐...</p>
-      <p class="lang-ko">재료: 김치, 돼지고기, 두부...</p>
+    
+    <!-- ==========================================
+         드링크 레시피 / ドリンクレシピ
+         ========================================== -->
+    <h2 class="lang-ja">🍹 ドリンクレシピ</h2>
+    <h2 class="lang-ko">🍹 드링크 레시피</h2>
+
+    <!-- 와인 칵테일 / ワインカクテル -->
+    <div class="recipe-card" data-name-ja="ワインカクテル わいん" data-name-ko="와인 칵테일">
+      <h3 class="lang-ja">ワインカクテル</h3>
+      <h3 class="lang-ko">와인 칵테일</h3>
+      <p class="lang-ja">ワイン（赤/白） 45ml + トニックウォーター</p>
+      <p class="lang-ko">와인(레드/화이트) 45ml + 토닉워터</p>
     </div>
+
+    <!-- 사워 종류 / サワー類 -->
+    <div class="recipe-card" data-name-ja="レモンサワー カルピスサワー れもん かるぴす" data-name-ko="사워 레몬사워 칼피스사워">
+      <h3 class="lang-ja">サワー類</h3>
+      <h3 class="lang-ko">사워 종류</h3>
+      <ul>
+        <li>
+          <strong class="lang-ja">レモンサワー:</strong><strong class="lang-ko">레몬사워:</strong> 
+          <span class="lang-ja">原液 75ml + 炭酸水 + レモンスライス</span>
+          <span class="lang-ko">원액 75ml + 탄산수 + 레몬 슬라이스</span>
+        </li>
+        <li>
+          <strong class="lang-ja">カルピスサワー:</strong><strong class="lang-ko">칼피스사워:</strong> 
+          <span class="lang-ja">原液 35ml + 炭酸水 + 焼酎 45ml</span>
+          <span class="lang-ko">원액 35ml + 탄산수 + 소주 45ml</span>
+        </li>
+        <li>
+          <strong class="lang-ja">その他のサワー:</strong><strong class="lang-ko">기타 사워:</strong> 
+          <span class="lang-ja">シロップ 40ml + レモン汁 10ml + 炭酸水 + 焼酎 45ml</span>
+          <span class="lang-ko">시럽 40ml + 레몬즙 10ml + 탄산수 + 소주 45ml</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 리큐르 & 스피리츠 칵테일 / リキュール＆スピリッツ カクテル -->
+    <div class="recipe-card" data-name-ja="リキュール ス피리츠 ハイボール ジンジャー 잭콕 スクリュードライバー モスコミュール ブラックルシアン メロンボール セックスオンザビーチ ジントニック ジンバック 翠ソーダ カシスオレンジ ウーロン하이 カルーアミルク マリブ 피치크러쉬 ファジーネーブル テキーラサンライズ" data-name-ko="리큐르 스피리츠 칵테일 하이볼 진저하이 잭 콕 스크류드라이버 모스코 뮬 블랙 루시안 멜론볼 섹스 온 더 비치 진토닉 진백 스이 소다 카시스 오렌지 우롱하이 깔루아 밀크 말리부 콕 말리부 파인 피치 크러시 퍼지 네이블 테킬라 선라이즈">
+      <h3 class="lang-ja">リキュール ＆ スピリッツ カクテル</h3>
+      <h3 class="lang-ko">리큐르 & 스피리츠 칵테일</h3>
+      <ul class="recipe-sublist">
+        <li><b class="lang-ja">ハイボール:</b><b class="lang-ko">하이볼:</b> <span class="lang-ja">ベルズ 35ml + 炭酸水 + レモンスライス（濃いめ: ベルズ 45ml）</span><span class="lang-ko">벨즈 35ml + 탄산수 + 레몬 슬라이스 (진하게: 벨즈 45ml)</span></li>
+        <li><b class="lang-ja">ジンジャーハイ:</b><b class="lang-ko">진저하이:</b> <span class="lang-ja">ベルズ 35ml + ジンジャーエール</span><span class="lang-ko">벨즈 35ml + 진저에일</span></li>
+        <li><b class="lang-ja">잭콕 (ロックグラス):</b><b class="lang-ko">잭 콕 (락잔):</b> <span class="lang-ja">ジャックダニエル 30ml + コーラ</span><span class="lang-ko">잭다니엘 30ml + 콜라</span></li>
+        <li><b class="lang-ja">スクリュードライバー:</b><b class="lang-ko">스크류드라이버:</b> <span class="lang-ja">ウォッカ 30ml + オレンジジュース</span><span class="lang-ko">보드카 30ml + 오렌지 주스</span></li>
+        <li><b class="lang-ja">モスコミュール:</b><b class="lang-ko">모스코 뮬:</b> <span class="lang-ja">ウォッカ 30ml + ライムジュース 15ml + ジンジャーエール</span><span class="lang-ko">보드카 30ml + 라임주스 15ml + 진저에일</span></li>
+        <li><b class="lang-ja">ブラックルシアン (ロックグラス):</b><b class="lang-ko">블랙 루시안 (락잔):</b> <span class="lang-ja">ウォッカ 40ml + カルーア 20ml</span><span class="lang-ko">보드카 40ml + 깔루아 20ml</span></li>
+        <li><b class="lang-ja">メロンボール:</b><b class="lang-ko">멜론볼:</b> <span class="lang-ja">ミドリ 40ml + ウォッカ 20ml + オレンジジュース</span><span class="lang-ko">미도리 40ml + 보드카 20ml + 오렌지 주스</span></li>
+        <li><b class="lang-ja">セックス・オン・ザ・ビーチ:</b><b class="lang-ko">섹스 온 더 비치:</b> <span class="lang-ja">ピーチツリー 25ml + ウォッカ 35ml + グレナデンシロップ 10ml + オレンジジュース</span><span class="lang-ko">피치트리 25ml + 보드카 35ml + 그레나딘 시럽 10ml + 오렌지 주스</span></li>
+        <li><b class="lang-ja">ジントニック:</b><b class="lang-ko">진토닉:</b> <span class="lang-ja">ジン 30ml + ライム汁 15ml + トニックウォーター</span><span class="lang-ko">진 30ml + 라임즙 15ml + 토닉워터</span></li>
+        <li><b class="lang-ja">ジンバック:</b><b class="lang-ko">진백:</b> <span class="lang-ja">ジン 30ml + ライム汁 15ml + ジンジャーエール</span><span class="lang-ko">진 30ml + 라임즙 15ml + 진저에일</span></li>
+        <li><b class="lang-ja">翠（SUI）ソーダ (ロックグラス):</b><b class="lang-ko">스이 소다 (락잔):</b> <span class="lang-ja">翠 30ml + 炭酸水</span><span class="lang-ko">스이 30ml + 탄산수</span></li>
+        <li><b class="lang-ja">カシスオレンジ:</b><b class="lang-ko">카시스 오렌지:</b> <span class="lang-ja">カシス 30ml + オレンジジュース</span><span class="lang-ko">카시스 30ml + 오렌지 주스</span></li>
+        <li><b class="lang-ja">ウーロンハイ:</b><b class="lang-ko">우롱하이:</b> <span class="lang-ja">焼酎 45ml + ウーロン茶</span><span class="lang-ko">소주 45ml + 우롱차</span></li>
+        <li><b class="lang-ja">カルーアミルク (ロックグラス):</b><b class="lang-ko">깔루아 밀크 (락잔):</b> <span class="lang-ja">カルーア 30ml + 牛乳</span><span class="lang-ko">깔루아 30ml + 우유</span></li>
+        <li><b class="lang-ja">マリブコーク:</b><b class="lang-ko">말리부 콕:</b> <span class="lang-ja">マリブ 30ml + コーラ</span><span class="lang-ko">말리부 30ml + 콜라</span></li>
+        <li><b class="lang-ja">マリブパイン:</b><b class="lang-ko">말리부 파인:</b> <span class="lang-ja">マリブ 30ml + パイナップルジュース</span><span class="lang-ko">말리부 30ml + 파인애플 주스</span></li>
+        <li><b class="lang-ja">ピーチクラッシュ:</b><b class="lang-ko">피치 크러시:</b> <span class="lang-ja">ピーチツリー 45ml + スイート＆サワー 30ml + クランベリージュース</span><span class="lang-ko">피치트리 45ml + 스윗&사워 30ml + 크랜베리 주스</span></li>
+        <li><b class="lang-ja">ファジーネーブル:</b><b class="lang-ko">퍼지 네이블:</b> <span class="lang-ja">ピーチツリー 30ml + オレンジジュース</span><span class="lang-ko">피치트리 30ml + 오렌지 주스</span></li>
+        <li><b class="lang-ja">テキーラサンライズ:</b><b class="lang-ko">테킬라 선라이즈:</b> <span class="lang-ja">テキーラ 45ml + グレナデンシロップ 10ml + オレンジジュース</span><span class="lang-ko">테킬라 45ml + 그레나딘 시럽 10ml + 오렌지 주스</span></li>
+      </ul>
+    </div>
+
+    <!-- 맥주 칵테일 / ビールカクテル -->
+    <div class="recipe-card" data-name-ja="ビール レッドアイ シャンディガフ びーる" data-name-ko="맥주 칵테일 레드아이 샨디가프">
+      <h3 class="lang-ja">ビールカクテル</h3>
+      <h3 class="lang-ko">맥주 칵테일</h3>
+      <ul>
+        <li><b class="lang-ja">レッドアイ:</b><b class="lang-ko">레드아이:</b> <span class="lang-ja">トマトジュース 1缶（またはビールグラス半分） + 生ビール</span><span class="lang-ko">토마토 주스 1캔 (또는 맥주잔 반) + 생맥주</span></li>
+        <li><b class="lang-ja">シャンディガフ:</b><b class="lang-ko">샨디가프:</b> <span class="lang-ja">ジンジャーエール（ビールグラス半分） + 生ビール</span><span class="lang-ko">진저에일 (맥주잔 반) + 생맥주</span></li>
+      </ul>
+    </div>
+
+    <!-- 말차 리큐르 칵테일 / 抹茶リキュールカクテル -->
+    <div class="recipe-card" data-name-ja="抹茶 照葉樹林 抹茶ハイ 抹茶ミルク まっちゃ" data-name-ko="말차 리큐르 칵테일 쇼요주린 말차하이 말차밀크">
+      <h3 class="lang-ja">抹茶リキュールカクテル</h3>
+      <h3 class="lang-ko">말차 리큐르 칵테일</h3>
+      <ul>
+        <li><b class="lang-ja">照葉樹林（ショウヨウジュリン）:</b><b class="lang-ko">쇼요주린:</b> <span class="lang-ja">抹茶リキュール 30ml + ウーロン茶</span><span class="lang-ko">말차 리큐르 30ml + 우롱차</span></li>
+        <li><b class="lang-ja">抹茶ハイ:</b><b class="lang-ko">말차하이:</b> <span class="lang-ja">抹茶リキュール 30ml + 炭酸水</span><span class="lang-ko">말차 리큐르 30ml + 탄산수</span></li>
+        <li><b class="lang-ja">抹茶ミルク:</b><b class="lang-ko">말차밀크:</b> <span class="lang-ja">抹茶リキュール 30ml + 牛乳</span><span class="lang-ko">말차 리큐르 30ml + 우유</span></li>
+      </ul>
+    </div>
+
+    <!-- 오리지널 칵테일 / オリジナルカクテル -->
+    <div class="recipe-card" data-name-ja="オリジナル ミドリサワー ブルーサファイア マルガリータ ギムレット ダイキリ" data-name-ko="오리지널 칵테일 미도리 사워 블루 사파이어 마가리타 김렛 다이키리">
+      <h3 class="lang-ja">オリジナルカクテル (8,000₩)</h3>
+      <h3 class="lang-ko">오리지널 칵테일 (8,000원)</h3>
+      <ul class="recipe-sublist">
+        <li><b class="lang-ja">ミドリサワー:</b><b class="lang-ko">미도리 사워:</b> <span class="lang-ja">(シェイク: ミドリ 30ml + レモン汁 30ml + シュガーシロップ 15ml) + トニックウォーター + レモンスライス</span><span class="lang-ko">(쉐이크: 미도리 30ml + 레몬즙 30ml + 슈가시럽 15ml) + 토닉워터 + 레몬 슬라이스</span></li>
+        <li><b class="lang-ja">ブルーサファイア:</b><b class="lang-ko">블루 사파이어:</b> <span class="lang-ja">マリブ 15ml + ブルーキュラソー 15ml + ピーチツリー 15ml + レモン汁 10ml + トニックウォーター</span><span class="lang-ko">말리부 15ml + 블루큐라소 15ml + 피치트리 15ml + 레몬즙 10ml + 토닉워터</span></li>
+        <li><b class="lang-ja">マルガリータ:</b><b class="lang-ko">마가리타:</b> <span class="lang-ja">(シェイク: テキーラ 30ml + ホワイトキュラソー 15ml + レモン汁 15ml) → グラスの縁に塩</span><span class="lang-ko">(쉐이크: 테킬라 30ml + 화이트큐라소 15ml + 레몬즙 15ml) → 잔 가장자리에 소금</span></li>
+        <li><b class="lang-ja">ギムレット:</b><b class="lang-ko">김렛:</b> <span class="lang-ja">(シェイク: ジン 45ml + ライムジュース)</span><span class="lang-ko">(쉐이크: 진 45ml + 라임 주스)</span></li>
+        <li><b class="lang-ja">ダイキリ:</b><b class="lang-ko">다이키리:</b> <span class="lang-ja">(シェイク: ラム 45ml + ライムジュース 15ml + シュガーシロップ 5ml)</span><span class="lang-ko">(쉐이크: 럼 45ml + 라임 주스 15ml + 슈가시럽 5ml)</span></li>
+      </ul>
+    </div>
+
+    <!-- 레몬사워 원액 비율 / レモンサワー原液比率 -->
+    <div class="recipe-card" data-name-ja="レモンサワー原液比率 れもんさわー" data-name-ko="레몬사워 원액 비율">
+      <h3 class="lang-ja">レモンサワー原液比率</h3>
+      <h3 class="lang-ko">레몬사워 원액 비율</h3>
+      <p class="lang-ja">焼酎 3 : レモン 1 : スイートサワー 1</p>
+      <p class="lang-ko">소주 3 : 레몬 1 : 스위트사워 1</p>
+    </div>
+
+    <!-- ==========================================
+         푸드 레시피 / フードレシピ
+         ========================================== -->
+    <h2 class="lang-ja">🍳 フードレシピ</h2>
+    <h2 class="lang-ko">🍳 푸드 레시피</h2>
+
+    <!-- 스낵류 / スナック類 -->
+    <div class="recipe-card" data-name-ja="スナック 枝豆 ミックスナッツ ナチョ えだまめ" data-name-ko="스낵류 에다마메 믹스넛 나쵸">
+      <h3 class="lang-ja">スナック類</h3>
+      <h3 class="lang-ko">스낵류</h3>
+      <ul class="recipe-sublist">
+        <li>
+          <b class="lang-ja">枝豆 (1番皿):</b><b class="lang-ko">에다마메 (1번 접시):</b> <span class="lang-ja">適量</span><span class="lang-ko">적당량</span>
+          <br><span class="lang-ja">・解凍済みの場合: 電子レンジ 30秒</span><span class="lang-ko">・해동된 경우: 전자레인지 30초</span>
+          <br><span class="lang-ja">・冷凍状態の場合: 電子レンジ 1分30秒</span><span class="lang-ko">・냉동 상태일 경우: 전자레인지 1분 30초</span>
+          <br><span class="lang-ja">※温める前に塩を振る</span><span class="lang-ko">※데우기 전 소금 뿌리기</span>
+        </li>
+        <li style="margin-top: 10px;">
+          <b class="lang-ja">ミックスナッツ (1番皿):</b><b class="lang-ko">믹스넛 (1번 접시):</b> <span class="lang-ja">適量</span><span class="lang-ko">적당량</span>
+        </li>
+        <li style="margin-top: 10px;">
+          <b class="lang-ja">ナチョス (3번皿 + 5번皿):</b><b class="lang-ko">나쵸 (3번 접시 + 5번 접시):</b> <span class="lang-ja">ナチョス適量 + ソース適량</span><span class="lang-ko">나쵸 적당량 + 소스 적당량</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 튀김류 / 揚げ物類 -->
+    <div class="recipe-card" data-name-ja="揚げ物 エアフライヤー 餃子 フライドポテト 唐揚げ からあげ ぎょうざ ぽてと" data-name-ko="튀김류 에어프라이어 교자 감자튀김 카라아게">
+      <h3 class="lang-ja">揚げ物類 (ノンフライヤー使用)</h3>
+      <h3 class="lang-ko">튀김류 (에어프라이어 사용)</h3>
+      <ul class="recipe-sublist">
+        <li>
+          <b class="lang-ja">餃子 (2번皿 + 4번皿):</b><b class="lang-ko">교자 (2번 접시 + 4번 접시):</b>
+          <br><span class="lang-ja">・餃子 10個 / 予熱: 10分 / 本加熱: 200℃ 7分</span><span class="lang-ko">・교자 10개 / 예열: 10분 / 본가열: 200℃ 7분</span>
+          <br><span class="lang-ja">・4番皿に醤油適量</span><span class="lang-ko">・4번 접시에 간장 적당량</span>
+        </li>
+        <li style="margin-top: 10px;">
+          <b class="lang-ja">フライドポテト (3번皿 + 5번皿):</b><b class="lang-ko">감자튀김 (3번 접시 + 5번 접시):</b>
+          <br><span class="lang-ja">・ポテト 2掴み / 予熱: 14分 / 本加熱: 200℃ 10分</span><span class="lang-ko">・감자 2줌 / 예열: 14분 / 본가열: 200℃ 10분</span>
+          <br><span class="lang-ja">・5番皿にケチャップ適量</span><span class="lang-ko">・5번 접시에 케찹 적당량</span>
+        </li>
+        <li style="margin-top: 10px;">
+          <b class="lang-ja">唐揚げ (2번皿):</b><b class="lang-ko">카라아게 (2번 접시):</b>
+          <br><span class="lang-ja">・大きいサイズ 10個分 (小さいものはサイズに合わせて調整)</span><span class="lang-ko">・큰 조각 10개 분량 (작은 조각은 크기에 따라 조정)</span>
+          <br><span class="lang-ja">・予熱: 10分 / 本加熱: 200℃ 7分</span><span class="lang-ko">・예열: 10분 / 본가열: 200℃ 7분</span>
+        </li>
+      </ul>
+    </div>
+
   </div>
 </div>
 
 <style>
-  /* 言語の初期表示制御 */
+  /* 言語の初期表示制御 (日本語をデフォルトに設定) */
   .lang-ko { display: none; }
   
-  /* 簡単なスタイリング */
-  .recipe-container { padding: 20px; max-width: 600px; margin: 0 auto; }
-  .lang-switch { margin-bottom: 15px; text-align: right; }
-  .lang-switch button { padding: 5px 10px; cursor: pointer; }
-  .search-box input { width: 100%; padding: 10px; margin-bottom: 20px; box-sizing: border-box; }
-  .recipe-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
+  /* デザインの調整 */
+  .recipe-container { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; }
+  .lang-switch { text-align: right; margin-bottom: 20px; }
+  .lang-switch button { padding: 8px 16px; font-size: 14px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px; margin-left: 5px; transition: 0.2s; }
+  .lang-switch button.active { background: #007bff; color: #fff; border-color: #007bff; }
+  .search-box input { width: 100%; padding: 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; margin-bottom: 25px; }
+  h2 { border-bottom: 2px solid #333; padding-bottom: 8px; margin-top: 30px; }
+  .recipe-card { border: 1px solid #e0e0e0; background: #fdfdfd; padding: 15px 20px; margin-bottom: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+  .recipe-card h3 { margin-top: 0; margin-bottom: 10px; color: #0056b3; font-size: 18px; }
+  .recipe-card p { margin: 5px 0; line-height: 1.5; }
+  .recipe-card ul { margin: 5px 0; padding-left: 20px; }
+  .recipe-card li { margin-bottom: 5px; line-height: 1.5; }
+  .recipe-sublist { list-style-type: none; padding-left: 0 !important; }
+  .recipe-sublist li { margin-bottom: 10px; border-bottom: 1px dashed #eee; padding-bottom: 8px; }
+  .recipe-sublist li:last-child { border-bottom: none; }
 </style>
 
 <script>
@@ -37,16 +198,22 @@
   // 言語切り替え機能
   function switchLanguage(lang) {
     currentLang = lang;
+    
+    // ボタンの活性化スタイル切り替え
+    document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+    document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
+
+    // 表示要素の切り替え
     if (lang === 'ja') {
-      document.querySelectorAll('.lang-ja').forEach(el => el.style.display = 'block');
+      document.querySelectorAll('.lang-ja').forEach(el => el.style.display = el.tagName === 'SPAN' || el.tagName === 'STRONG' || el.tagName === 'B' ? 'inline' : 'block');
       document.querySelectorAll('.lang-ko').forEach(el => el.style.display = 'none');
-      document.getElementById('recipeSearch').placeholder = 'レシピを検索...';
+      document.getElementById('recipeSearch').placeholder = 'レシピ・材料を検索...';
     } else {
       document.querySelectorAll('.lang-ja').forEach(el => el.style.display = 'none');
-      document.querySelectorAll('.lang-ko').forEach(el => el.style.display = 'block');
-      document.getElementById('recipeSearch').placeholder = '레시피 검색...';
+      document.querySelectorAll('.lang-ko').forEach(el => el.style.display = el.tagName === 'SPAN' || el.tagName === 'STRONG' || el.tagName === 'B' ? 'inline' : 'block');
+      document.getElementById('recipeSearch').placeholder = '레시피・재료 검색...';
     }
-    filterRecipes(); // 言語切り替え時にも検索フィルターを再適用
+    filterRecipes(); // 検索結果を現在の言語ベースで再計算
   }
 
   // 検索機能
@@ -55,9 +222,8 @@
     const cards = document.querySelectorAll('.recipe-card');
 
     cards.forEach(card => {
-      // 選択されている言語に応じた検索対象属性を取得
-      const name = card.getAttribute(`data-name-${currentLang}`).toLowerCase();
-      if (name.includes(input)) {
+      const searchTarget = card.getAttribute(`data-name-${currentLang}`).toLowerCase();
+      if (searchTarget.includes(input)) {
         card.style.display = "block";
       } else {
         card.style.display = "none";
