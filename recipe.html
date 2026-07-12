@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -84,21 +85,18 @@
 				color: #aaaaaa;
 			}
 			.recipe-item {
-				padding: 0 !important;
-				margin: 0 !important;
+				padding: 10px 0 !important;
+				border-bottom: 1px solid #333333 !important;
 			}
 			.recipe-item dl {
 				display: flex !important;
 				justify-content: space-between !important;
-				align-items: center !important;
+				align-items: flex-start !important;
 				width: 100% !important;
 				margin: 0 !important;
-				padding: 15px 0 !important;
+				padding: 0 !important;
 				background: none !important;
-				border-top: none !important;
-				border-left: none !important;
-				border-right: none !important;
-				border-bottom: 1px solid #333333 !important;
+				border: none !important;
 			}
 			.recipe-item dt {
 				width: 35% !important;
@@ -107,8 +105,6 @@
 				margin: 0 !important;
 				font-weight: bold !important;
 				color: #ffffff !important;
-				display: flex !important;
-				align-items: center !important;
 			}
 			.recipe-item dd {
 				width: 65% !important;
@@ -117,27 +113,18 @@
 				margin: 0 !important;
 				color: #ffffff !important;
 				line-height: 1.4 !important;
-				display: flex !important;
-				align-items: center !important;
-				justify-content: flex-end !important;
 			}
 			.lang-ja, .lang-ko { display: block; }
 			.recipe-detail {
 				font-size: 0.85em;
 				color: #ffffff !important;
-				margin-top: -10px;
-				padding-top: 5px;
-				padding-bottom: 15px;
-				border-bottom: 1px solid #333333 !important;
+				margin-top: 8px;
+				padding-bottom: 0px;
 				line-height: 1.5;
 				text-align: left;
 			}
 			.recipe-detail span { display: block; }
 			.recipe-item dl::after, .recipe-item dl::before { display: none !important; }
-			
-			.no-bottom-border dl {
-				border-bottom: none !important;
-			}
 		</style>
 	</head>
 	<body>
@@ -151,7 +138,7 @@
 		<div id="recipe-content">
 			<header id="header">
 				<div>
-					<h2 class="page-title">レシピ レ시피</h2>
+					<h2 class="page-title">レシピ 레시피</h2>
 					<hr>
 					<p>REST & MANKIN ドリンク＆フード・レシピ</p>
 					<hr>
@@ -198,12 +185,12 @@
 						<dd class="lang-ko">원액 35ml + 탄산수 + 소주 45ml</dd>
 					</dl>
 				</div>
-				<div class="recipe-item" data-keywords-ja="その他のサワー ぎた シロップ レモン汁 炭酸水 焼酎" data-keywords-ko="기타 사워 시럽 レモン즙 탄산수 소주">
+				<div class="recipe-item" data-keywords-ja="その他のサワー ぎた シロップ レモン汁 炭酸水 焼酎" data-keywords-ko="기타 사워 시럽 레몬즙 탄산수 소주">
 					<dl>
 						<dt class="lang-ja">その他のサワー</dt>
 						<dt class="lang-ko">기타 사워</dt>
 						<dd class="lang-ja">シロップ 40ml + レモン 10ml + 炭酸 + 焼酎45</dd>
-						<dd class="lang-ko">시럽 40ml + レモン즙 10ml + 탄산수 + 소주 45ml</dd>
+						<dd class="lang-ko">시럽 40ml + 레몬즙 10ml + 탄산수 + 소주 45ml</dd>
 					</dl>
 				</div>
 			</div>
@@ -214,7 +201,7 @@
 					<dl>
 						<dt class="lang-ja">ハイボール</dt><dt class="lang-ko">하이볼</dt>
 						<dd class="lang-ja">ベルズ 35ml + 炭酸 + レモン（濃いめ: 45ml）</dd>
-						<dd class="lang-ko">벨즈 35ml + 탄산수 + レ몬 슬라이스 (진하게: 45ml)</dd>
+						<dd class="lang-ko">벨즈 35ml + 탄산수 + 레몬 슬라이스 (진하게: 45ml)</dd>
 					</dl>
 				</div>
 				<div class="recipe-item" data-keywords-ja="ジンジャーハイ じんじゃー ベルズ ジンジャーエール" data-keywords-ko="진저하이 벨즈 진저에일">
@@ -270,7 +257,7 @@
 					<dl>
 						<dt class="lang-ja">ジントニック</dt><dt class="lang-ko">진토닉</dt>
 						<dd class="lang-ja">ジン 30ml + ライム 15ml + トニック</dd>
-						<dd class="lang-ko">진 30ml + 라임즙 15ml + 토닉워터</dd>
+						<dd class="lang-ko">진 30ml + 라임즙 15ml + 토ニック워터</dd>
 					</dl>
 				</div>
 				<div class="recipe-item" data-keywords-ja="ジンバック じんばっく ジン백 ジン ライム汁 ジンジャーエール" data-keywords-ko="진백 진 라임즙 진저에일">
@@ -354,7 +341,7 @@
 						<dd class="lang-ko">토마토 주스 1캔 (또는 맥주잔 반) + 생맥주</dd>
 					</dl>
 				</div>
-				<div class="recipe-item" data-keywords-ja="シャン디가프 しゃんでぃ ジンジャーエール 生ビール" data-keywords-ko="샨디가프 진저에일 생맥주">
+				<div class="recipe-item" data-keywords-ja="シャンディ가프 しゃんでぃ ジンジャーエール 生ビール" data-keywords-ko="샨디가프 진저에일 생맥주">
 					<dl>
 						<dt class="lang-ja">シャンディガフ</dt><dt class="lang-ko">샨디가프</dt>
 						<dd class="lang-ja">ジンジャーエール（半分） + 生ビール</dd>
@@ -399,7 +386,7 @@
 				</div>
 				<div class="recipe-item" data-keywords-ja="블루사파이어 ブルーサファイア ぶるー マリブ ブルーキュラソー ピーチツリー レモン汁 トニック" data-keywords-ko="블루 사파이어 말리부 블루큐라소 피치트리 레몬즙 토닉워터">
 					<dl>
-						<dt class="lang-ja">ブルーサファイア</dt><dt class="lang-ko">ブルーサファイア</dt>
+						<dt class="lang-ja">ブルーサファイア</dt><dt class="lang-ko">블루 사파이어</dt>
 						<dd class="lang-ja">マリブ15 + ブルー15 + ピーチ15 + レモン10 + トニック</dd>
 						<dd class="lang-ko">말리부 15 + 블루 15 + 피치 15 + 레몬즙 10 + 토닉워터</dd>
 					</dl>
@@ -440,7 +427,7 @@
 
 			<div class="menu recipe-section">
 				<h3>안주 おつまみ</h3>
-				<div class="recipe-item no-bottom-border" data-keywords-ja="枝豆 えだまめ 1番皿 適量 解凍 冷凍 電子レンジ 塩" data-keywords-ko="에다마메 1번 접시 적당량 해동 전자레인지 냉동 소금">
+				<div class="recipe-item" data-keywords-ja="枝豆 えだまめ 1番皿 適量 解凍 冷凍 電子レンジ 塩" data-keywords-ko="에다마메 1번 접시 적당량 해동 전자레인지 냉동 소금">
 					<dl>
 						<dt class="lang-ja">えだまめ (1番皿)</dt><dt class="lang-ko">에다마메 (1번 접시)</dt>
 						<dd class="lang-ja">適量 (※温める前に塩)</dd>
@@ -468,9 +455,9 @@
 
 			<div class="recipe-section menu">
 				<h3>안주 おつまみ (에어프라이어)</h3>
-				<div class="recipe-item no-bottom-border" data-keywords-ja="餃子 ぎょうざ 2番皿 4番皿 10個 予熱 本加熱 200℃ 7分 醤油" data-keywords-ko="교자 2번 접시 4번 접시 10개 예열 본가열 간장 적당량">
+				<div class="recipe-item" data-keywords-ja="餃子 ぎょうざ 2番皿 4番皿 10個 予熱 本加熱 200℃ 7分 醤油" data-keywords-ko="교자 2번 접시 4번 접시 10개 예열 본가열 간장 적당량">
 					<dl>
-						<dt class="lang-ja">餃子 (2番 + 4番皿)</dt><dt class="lang-ko">교자 (2번 + 4번 접시)</dt>
+						<dt class="lang-ja">餃子 (2番 + 4番皿)</dt><dt class="lang-ko">교자 (2番 + 4番 접시)</dt>
 						<dd class="lang-ja">10個 / 予熱10分 / 本加熱200℃ 7分</dd>
 						<dd class="lang-ko">10개 / 예열 10분 / 본가열 200℃ 7분</dd>
 					</dl>
@@ -479,7 +466,7 @@
 						<span class="lang-ko">※4번 접시에 간장 적당량</span>
 					</div>
 				</div>
-				<div class="recipe-item no-bottom-border" data-keywords-ja="フライドポテト ぽてと 3番皿 5番皿 2掴み 予熱 本加熱 200℃ 10分 ケチャップ" data-keywords-ko="감자튀김 3번 접시 5번 접시 감자 2줌 예열 본가열 케찹 적당량">
+				<div class="recipe-item" data-keywords-ja="フライドポテト ぽてと 3番皿 5番皿 2掴み 予熱 本加熱 200℃ 10分 ケチャップ" data-keywords-ko="감자튀김 3번 접시 5번 접시 감자 2줌 예열 본가열 케찹 적당량">
 					<dl>
 						<dt class="lang-ja">フライドポテト (3番+5番)</dt><dt class="lang-ko">감자튀김 (3번+5번)</dt>
 						<dd class="lang-ja">2掴み / 予熱14分 / 本加熱200℃ 10分</dd>
@@ -544,20 +531,7 @@
 
 				items.forEach(item => {
 					const keywords = item.getAttribute(`data-keywords-${currentLang}`).toLowerCase();
-					
-					let isMatch = keywords.includes(input);
-					
-					if (!isMatch) {
-						const detail = item.querySelector('.recipe-detail');
-						if (detail) {
-							const detailText = detail.textContent.toLowerCase();
-							if (detailText.includes(input)) {
-								isMatch = true;
-							}
-						}
-					}
-					
-					if (isMatch) {
+					if (keywords.includes(input)) {
 						item.style.display = "block";
 					} else {
 						item.style.display = "none";
