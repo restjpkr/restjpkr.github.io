@@ -515,11 +515,11 @@
 				if (lang === 'ja') {
 					document.querySelectorAll('.lang-ja').forEach(el => el.style.display = (el.tagName === 'SPAN' ? 'inline' : 'block'));
 					document.querySelectorAll('.lang-ko').forEach(el => el.style.display = 'none');
-					document.getElementById('recipeSearch').placeholder = 'レシピ・材料を検索...';
+					document.getElementById('recipeSearch').placeholder = 'レシピを検索...';
 				} else {
 					document.querySelectorAll('.lang-ja').forEach(el => el.style.display = 'none');
 					document.querySelectorAll('.lang-ko').forEach(el => el.style.display = (el.tagName === 'SPAN' ? 'inline' : 'block'));
-					document.getElementById('recipeSearch').placeholder = '레시피・재료 검색...';
+					document.getElementById('recipeSearch').placeholder = '레시피 검색...';
 				}
 				filterRecipes();
 			}
