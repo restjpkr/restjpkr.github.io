@@ -86,7 +86,7 @@ body {
 }
 
 .info-card h4 {
-  color: #ff6b6b; 
+  color: #d4af37; 
   font-size: 0.95rem;
   margin-top: 10px;
   margin-bottom: 6px;
@@ -101,6 +101,13 @@ body {
 
 .info-card p:last-of-type {
   margin-bottom: 0;
+}
+
+.info-card hr {
+  display: block;                  
+  border: 0;
+  border-bottom: 1px dotted rgba(212, 175, 55, 0.3); 
+  margin: 12px 0;
 }
 
 
