@@ -499,12 +499,20 @@
 
 <script>
 	document.getElementById("scrollToTopBtn").addEventListener("click", function() {
-		window.scrollTo({
-			top: 0,
-			behavior: "smooth"
-		});
+		// 1. スムーズなスクロールを試みる
+		try {
+			window.scrollTo({
+				top: 0,
+				behavior: "smooth"
+			});
+		} catch (e) {
+			// 2. 特殊なテンプレート仕様でも強制的に一番上に移動させる処理
+			document.documentElement.scrollTop = 0;
+			document.body.scrollTop = 0;
+		}
 	});
 </script>
+
 
 	</body>
 </html>
