@@ -4,7 +4,7 @@
 		<title>MENU</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/lab.css" />
+		<link rel="stylesheet" href="assets/css/menu.css" />
 	</head>
 	<body>
 
@@ -26,6 +26,11 @@
 				</p>
 			</div>
 		</header>
+
+		<!-- 検索バーコンテナ -->
+		<div class="search-container">
+			<input type="text" id="search-bar" placeholder="メニューを検索 / 메뉴 검색...">
+		</div>
 
 		<main class="main-content">
 			<div class="menu">
@@ -214,7 +219,7 @@
 					<dd>7,000원</dd>
 				</dl>											
 				<dl>
-					<dt>照葉樹林</dt><dt>쇼요주린 (말차ウロン)</dt>
+					<dt>照葉樹林</dt><dt>쇼요주린 (말차우롱)</dt>
 					<dd>7,000원</dd>
 				</dl>
 				<dl>
@@ -250,7 +255,7 @@
 					<dd>9,000원</dd>
 				</dl>	
 			</div>
-	
+
 			<div class="menu"> 
 				<h3>ソフトドリンク   소프트드링크</h3>
 				<dl>
@@ -384,7 +389,7 @@
 				</dl>
 				<dl>
 					<dt>ミックスナッツ</dt>
-					<dt>믹ス넛츠</dt>
+					<dt>믹스넛츠</dt>
 					<dd>5,000원</dd>
 				</dl>
 				<dl>
@@ -413,7 +418,7 @@
 				<h4>案内事項</h4>
 				<p>
 					-他のお客様のスペース確保にご協力をお願いいたします。<br>
-					-他のお客様に不快感を与えたり、案内事項に従っていただけない場合、スタッフの判断で退店および出入り禁止の処置を取らせていただきます。
+					-他のお客様に不快感を与えたり、案内事項に従っていただけない場合, スタッフの判断で退店および出入り禁止の処置を取らせていただきます。
 				</p>
 				<hr>
 				<h4>안내사항</h4>
@@ -452,7 +457,7 @@
 				<p>
 					プライベートなVIPルームまで完備の日本語、韓国語、ハンボノで楽しめるジャパニーズバー<br>
 					프라이빗한 VIP룸까지 완비된 일본어, 한국어, 한본어로 즐거운 재페니즈 바<br><br>
-					OPEN 18:00-03:00 / 年中無休 연중무휴<br>
+					OPEN 18:00-03:00 / 年中無휴 연중무휴<br>
 					주소 住所 : 서울 중구 저동2가 48-25 4,5층<br><br>
 					Instagram : <a href="https://www.instagram.com/mankin2_jpkr" target="_blank">@mankin2_jpkr</a><br>
 					WiFi : <span>???</span>
@@ -462,7 +467,34 @@
 			</div>
 		</footer>
 
-		<script src="assets/js/main.js"></script>
+		<!-- リアルタイム検索用の軽量JavaScript処理 -->
+		<script>
+			document.getElementById('search-bar').addEventListener('input', function(e) {
+				const query = e.target.value.toLowerCase().trim();
+				const menuBlocks = document.querySelectorAll('main .menu:not(.rules-card)');
 
+				menuBlocks.forEach(block => {
+					let hasVisibleItem = false;
+					const items = block.querySelectorAll('dl');
+
+					items.forEach(item => {
+						const text = item.textContent.toLowerCase();
+						if (text.includes(query)) {
+							item.style.display = 'grid';
+							hasVisibleItem = true;
+						} else {
+							item.style.display = 'none';
+						}
+					});
+
+					// カテゴリ内に該当する商品が1つもない場合はカテゴリごと非表示にする
+					if (hasVisibleItem || query === '') {
+						block.style.display = 'block';
+					} else {
+						block.style.display = 'none';
+					}
+				});
+			});
+		</script>
 	</body>
 </html>
