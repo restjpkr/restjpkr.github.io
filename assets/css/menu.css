@@ -87,13 +87,13 @@ body {
 
 .info-card h4 {
   color: #d4af37; 
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   margin-top: 10px;
   margin-bottom: 6px;
 }
 
 .info-card p {
-  font-size: 0.8rem;
+  font-size: 1rem;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.6);
   margin-bottom: 15px;
@@ -120,13 +120,13 @@ body {
 
 .rules-card h4 {
   color: #ff6b6b; 
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   margin-top: 10px;
   margin-bottom: 6px;
 }
 
 .rules-card p {
-  font-size: 0.8rem;
+  font-size: 1rem;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.6);
   margin-bottom: 15px;
