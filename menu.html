@@ -7,6 +7,53 @@
 		<link rel="stylesheet" href="assets/css/menu.css" />
 		<div class=”wp-block-spacer” aria-hidden=”true”></div>
 	</head>
+	<button id="scrollToTopBtn" title="Go to top">▲</button>
+
+<style>
+  #scrollToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #2f4f4f;
+    color: white;
+    cursor: pointer;
+    padding: 12px 16px;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s, opacity 0.3s;
+  }
+
+  #scrollToTopBtn:hover {
+    background-color: #1a2f2f;
+  }
+</style>
+
+<script>
+  const topButton = document.getElementById("scrollToTopBtn");
+
+  window.onscroll = function() {
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      topButton.style.display = "block";
+    } else {
+      topButton.style.display = "none";
+    }
+  };
+
+  topButton.addEventListener("click", function() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+</script>
+
+	
 	<body>
 
 			<header id="header">
