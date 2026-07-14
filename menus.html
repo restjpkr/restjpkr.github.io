@@ -468,53 +468,39 @@
 
 		<script src="assets/js/main.js"></script>
 
-		<button id="scrollToTopBtn" title="Go to top">▲</button>
+		<a href="#header" id="scrollToTopBtn">▲</a>
 
-		<style>
-			#scrollToTopBtn {
-				display: none;
-				position: fixed;
-				bottom: 25px;
-				right: 25px;
-				z-index: 99999;
-				border: none;
-				outline: none;
-				background-color: #2f4f4f;
-				color: white;
-				cursor: pointer;
-				width: 50px;
-				height: 50px;
-				border-radius: 50%;
-				font-size: 18px;
-				font-weight: bold;
-				box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
-				transition: opacity 0.3s, background-color 0.3s;
-				-webkit-tap-highlight-color: transparent; 
-			}
-			#scrollToTopBtn:hover {
-				background-color: #1a2f2f;
-			}
-		</style>
+<style>
+	html {
+		scroll-behavior: smooth !important;
+	}
+	
+	#scrollToTopBtn {
+		position: fixed !important;
+		bottom: 25px !important;
+		right: 25px !important;
+		z-index: 999999 !important;
+		background-color: #2f4f4f !important;
+		color: #ffffff !important;
+		width: 50px !important;
+		height: 50px !important;
+		border-radius: 50% !important;
+		font-size: 18px !important;
+		font-weight: bold !important;
+		text-align: center !important;
+		line-height: 50px !important;
+		text-decoration: none !important;
+		box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5) !important;
+		display: block !important;
+		transition: background-color 0.3s !important;
+		-webkit-tap-highlight-color: transparent !important; 
+	}
+	
+	#scrollToTopBtn:hover {
+		background-color: #1a2f2f !important;
+	}
+</style>
 
-		<script>
-			const topButton = document.getElementById("scrollToTopBtn");
-
-			window.addEventListener("scroll", function() {
-				const scrolled = window.pageYOffset || document.documentElement.scrollTop;
-				if (scrolled > 200) {
-					topButton.style.display = "block";
-				} else {
-					topButton.style.display = "none";
-				}
-			});
-
-			topButton.addEventListener("click", function() {
-				window.scrollTo({
-					top: 0,
-					behavior: "smooth"
-				});
-			});
-		</script>
 
 	</body>
 </html>
