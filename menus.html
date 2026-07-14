@@ -8,7 +8,40 @@
 		<div class="wp-block-spacer" aria-hidden="true"></div>
 	</head>
 	<body>
+<div id="menu-nav">
+  <a href="#beer">生ビール</a>
+  <a href="#sour">サワー</a>
+  <a href="#cocktail">カクテル</a>
+  <a href="#food">おつまみ</a>
+  <a href="#footer">店舗情報</a>
+</div>
 
+<style>
+  #menu-nav {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #2f4f4f;
+    display: flex;
+    overflow-x: auto; /* はみ出したら横スクロール */
+    white-space: nowrap;
+    z-index: 99999;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    -webkit-overflow-scrolling: touch;
+  }
+  #menu-nav::-webkit-scrollbar {
+    display: none; /* スクロールバーは隠す */
+  }
+  #menu-nav a {
+    color: white !important;
+    text-decoration: none !important;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+  }
+</style>
 		<header id="header">
 			<div>
 				<h2 class="page-title">メニュー 메뉴</h2><hr>
