@@ -82,6 +82,36 @@ body {
     color: #ccc;
 }
 
+.info-card {
+  background: rgba(255, 107, 107, 0.03); 
+  border: 1px solid rgba(255, 107, 107, 0.15);
+  border-radius: 12px;                
+  padding: 24px;                      
+}
+
+.info-card h4 {
+  color: #ff6b6b; 
+  font-size: 0.95rem;
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.info-card p {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 15px;
+}
+
+.info-card p:last-of-type {
+  margin-bottom: 0;
+}
+
+.info-card hr {
+  display: none; 
+}
+
+
 .rules-card {
   background: rgba(255, 107, 107, 0.03); 
   border: 1px solid rgba(255, 107, 107, 0.15);
