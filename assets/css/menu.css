@@ -103,10 +103,6 @@ body {
   margin-bottom: 0;
 }
 
-.info-card hr {
-  display: none; 
-}
-
 
 .rules-card {
   background: rgba(255, 107, 107, 0.03); 
