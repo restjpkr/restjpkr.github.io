@@ -89,7 +89,9 @@
 				border-bottom: 1px solid #333333 !important;
 			}
 			.recipe-item dl {
-				display: block !important;
+				display: flex !important;
+				justify-content: space-between !important;
+				align-items: flex-start !important;
 				width: 100% !important;
 				margin: 0 !important;
 				padding: 0 !important;
@@ -97,8 +99,7 @@
 				border: none !important;
 			}
 			.recipe-item dt {
-				display: block !important;
-				width: 100% !important;
+				width: 35% !important;
 				text-align: left !important;
 				padding: 0 !important;
 				margin: 0 !important;
@@ -106,9 +107,8 @@
 				color: #ffffff !important;
 			}
 			.recipe-item dd {
-				display: block !important;
-				width: 100% !important;
-				text-align: left !important;
+				width: 65% !important;
+				text-align: right !important;
 				padding: 0 !important;
 				margin: 0 !important;
 				color: #ffffff !important;
@@ -142,7 +142,13 @@
 					<hr>
 				</div>
 			</header>
-</div>
+
+			<div class="recipe-controls">
+				<div class="lang-buttons">
+					<button onclick="switchLanguage('ja')" id="btn-ja" class="active">日本語</button>
+					<button onclick="switchLanguage('ko')" id="btn-ko">한국어</button>
+				</div>
+			</div>
 
 			<div class="menu recipe-section">
 				<h3> アルバイト研修マニュアル STAFF MANUAL</h3>
@@ -780,10 +786,37 @@
 				if (lang === 'ja') {
 					document.querySelectorAll('.lang-ja').forEach(el => el.style.display = (el.tagName === 'SPAN' ? 'inline' : 'block'));
 					document.querySelectorAll('.lang-ko').forEach(el => el.style.display = 'none');
+					document.getElementById('recipeSearch').placeholder = 'レシピを検索...';
 				} else {
 					document.querySelectorAll('.lang-ja').forEach(el => el.style.display = 'none');
 					document.querySelectorAll('.lang-ko').forEach(el => el.style.display = (el.tagName === 'SPAN' ? 'inline' : 'block'));
+					document.getElementById('recipeSearch').placeholder = '레시피 검색...';
+				}
+				filterRecipes();
+			}
+
+			function filterRecipes() {
+				const input = document.getElementById('recipeSearch').value.toLowerCase();
+				const items = document.querySelectorAll('.recipe-item');
+
+				items.forEach(item => {
+					const keywords = item.getAttribute(`data-keywords-${currentLang}`).toLowerCase();
+					if (keywords.includes(input)) {
+						item.style.display = "block";
+					} else {
+						item.style.display = "none";
 					}
+				});
+
+				const sections = document.querySelectorAll('.recipe-section');
+				sections.forEach(sec => {
+					const visibleItems = sec.querySelectorAll('.recipe-item[style="display: block;"], .recipe-item:not([style*="display: none"])');
+					if (visibleItems.length === 0) {
+						sec.style.display = 'none';
+					} else {
+						sec.style.display = 'block';
+					}
+				});
 			}
 		</script>
 	</body>
