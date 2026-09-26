@@ -1,0 +1,823 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>MANUAL</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/menu.css" />
+		<style>
+			#password-screen {
+				position: fixed;
+				top: 0; left: 0; width: 100%; height: 100%;
+				background-color: #0d161a;
+				z-index: 9999;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				color: white;
+				font-family: sans-serif;
+			}
+			#password-screen h2 {
+				margin-bottom: 20px;
+				font-size: 20px;
+				letter-spacing: 1px;
+			}
+			#password-screen input {
+				background: transparent;
+				border: 1px solid #ffffff;
+				border-radius: 30px;
+				padding: 12px 20px;
+				color: white;
+				font-size: 18px;
+				text-align: center;
+				width: 200px;
+				outline: none;
+				margin-bottom: 15px;
+			}
+			#password-screen button {
+				background-color: #17b99a;
+				color: white;
+				border: none;
+				padding: 10px 30px;
+				font-weight: bold;
+				border-radius: 30px;
+				cursor: pointer;
+				font-size: 16px;
+			}
+			#recipe-content {
+				display: none;
+			}
+			.recipe-controls {
+				margin: 20px auto;
+				max-width: 100%;
+				text-align: center;
+			}
+			.lang-buttons button {
+				background-color: #263c3d;
+				color: white;
+				border: none;
+				padding: 8px 16px;
+				margin: 5px;
+				cursor: pointer;
+				font-weight: bold;
+				border-radius: 4px;
+				transition: 0.2s;
+			}
+			.lang-buttons button.active {
+				background-color: #17b99a;
+			}
+			.search-bar input {
+				width: 90%;
+				max-width: 400px;
+				padding: 12px 20px;
+				margin-top: 15px;
+				background-color: #000000;
+				border: 1px solid #ffffff;
+				border-radius: 30px;
+				color: #ffffff;
+				font-size: 16px;
+				outline: none;
+				box-sizing: border-box;
+			}
+			.search-bar input::placeholder {
+				color: #aaaaaa;
+			}
+			.recipe-item {
+				padding: 10px 0 !important;
+				border-bottom: 1px solid #333333 !important;
+			}
+			.recipe-item dl {
+				display: flex !important;
+				justify-content: space-between !important;
+				align-items: flex-start !important;
+				width: 100% !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				background: none !important;
+				border: none !important;
+			}
+			.recipe-item dt {
+				width: 35% !important;
+				text-align: left !important;
+				padding: 0 !important;
+				margin: 0 !important;
+				font-weight: bold !important;
+				color: #ffffff !important;
+			}
+			.recipe-item dd {
+				width: 65% !important;
+				text-align: right !important;
+				padding: 0 !important;
+				margin: 0 !important;
+				color: #ffffff !important;
+				line-height: 1.4 !important;
+			}
+			.lang-ja, .lang-ko { display: block; }
+			.recipe-detail {
+				font-size: 0.85em;
+				color: #ffffff !important;
+				margin-top: 8px;
+				padding-bottom: 0px;
+				line-height: 1.5;
+				text-align: left;
+			}
+			.recipe-detail span { display: block; }
+			.recipe-item dl::after, .recipe-item dl::before { display: none !important; }
+		</style>
+	</head>
+	<body>
+
+		<div id="password-screen">
+			<h2>PASSWORD REQUIRED</h2>
+			<input type="password" id="passInput" placeholder="••••">
+			<button onclick="checkPassword()">ENTER</button>
+		</div>
+
+		<div id="recipe-content">
+			<header id="header">
+				<div>
+					<h2 class="page-title">マニュアル 매뉴얼</h2>
+					<hr>
+				</div>
+			</header>
+
+			<div class="recipe-controls">
+				<div class="lang-buttons">
+					<button onclick="switchLanguage('ja')" id="btn-ja" class="active">日本語</button>
+					<button onclick="switchLanguage('ko')" id="btn-ko">한국어</button>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> アルバイト研修マニュアル STAFF MANUAL</h3>
+				<div class="search-bar">
+					<input type="text" id="recipeSearch" placeholder="マニュアルを検索..." oninput="filterRecipes()">
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 基本情報 기본 정보</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">基本情報</dt>
+						<dt class="lang-ko">기본 정보</dt>
+						<dd class="lang-ja">当店は日本人のお客様が多い店舗です。</dd>
+						<dd class="lang-ko">저희 가게는 일본인 손님이 많은 매장입니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">店舗について</dt>
+						<dt class="lang-ko">매장 안내</dt>
+						<dd class="lang-ja">ソウルに4つの店舗があります。</dd>
+						<dd class="lang-ko">서울에 4개의 점포가 있습니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">複数店舗勤務</dt>
+						<dt class="lang-ko">복수 매장 근무</dt>
+						<dd class="lang-ja">1店舗だけでなく、複数店舗で勤務する可能性がありますので、シフト表を必ず確認してください。</dd>
+						<dd class="lang-ko">한 지점뿐만 아니라 여러 지점에서 근무할 수 있으니 근무표를 꼭 확인해 주세요。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 勤務について 근무 관련 안내</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">希望勤務日の提出</dt>
+						<dt class="lang-ko">희망 근무일 제출</dt>
+						<dd class="lang-ja">毎月20日までに希望勤務日を提出してください。</dd>
+						<dd class="lang-ko">매달 20일까지 희망 근무일을 제출해 주세요。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">シフト公開</dt>
+						<dt class="lang-ko">근무표 공개</dt>
+						<dd class="lang-ja">25日に翌月のシフト表が公開されます。</dd>
+						<dd class="lang-ko">25일에 다음 달 근무표가 공개됩니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">希望勤務日の提出方法</dt>
+						<dt class="lang-ko">희망 근무일 제출 방법</dt>
+						<dd class="lang-ja">希望を出す際は、出勤・退勤時間は不要で、日付のみ送ってください。（時間はお店側で調整します）</dd>
+						<dd class="lang-ko">희망 근무일을 보낼 때 날짜만 보내주세요. (시간은 매장 사정에 따라 조정됩니다.)</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 勤務時間 근무시간</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">勤務時間</dt>
+						<dt class="lang-ko">근무시간</dt>
+						<dd class="lang-ja">勤務時間は4時間30分〜7時間30分の間で、日ごとの忙しさによって変動します。</dd>
+						<dd class="lang-ko">근무시간은 4시간 30분~7시간 30분이며, 당일 상황에 따라 변동됩니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">出勤・退勤時間</dt>
+						<dt class="lang-ko">출퇴근 시간</dt>
+						<dd class="lang-ja">出勤時間は固定、退勤時間は当日の状況により変わります。</dd>
+						<dd class="lang-ko">출근시간은 고정, 퇴근시간은 유동적입니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">退勤のタイミング</dt>
+						<dt class="lang-ko">퇴근 타이밍</dt>
+						<dd class="lang-ja">退勤のタイミングは店長が指示します。</dd>
+						<dd class="lang-ko">퇴근 타이밍은 점장이 안내합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">勤務態度</dt>
+						<dt class="lang-ko">근무 태도</dt>
+						<dd class="lang-ja">勤務態度が良いほど、希望勤務日を優先的に反映します。</dd>
+						<dd class="lang-ko">근무 태도가 좋을수록 희망 근무일을 우선 반영합니다。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 出勤時間詳細 출근시간 안내</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">レスト / Lu9（平日）</dt>
+						<dt class="lang-ko">레스트 / Lu9 (평일)</dt>
+						<dd class="lang-ja">19:00 / 20:00 / 20:30 / 21:30</dd>
+						<dd class="lang-ko">19:00 / 20:00 / 20:30 / 21:30</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">レスト / Lu9（週末）</dt>
+						<dt class="lang-ko">레스트 / Lu9 (주말)</dt>
+						<dd class="lang-ja">18:30 / 19:30 / 20:30 / 21:30</dd>
+						<dd class="lang-ko">18:30 / 19:30 / 20:30 / 21:30</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">MANKIN（平日）</dt>
+						<dt class="lang-ko">MANKIN (평일)</dt>
+						<dd class="lang-ja">19:30 / 21:00</dd>
+						<dd class="lang-ko">19:30 / 21:00</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">MANKIN（週末）</dt>
+						<dt class="lang-ko">MANKIN (주말)</dt>
+						<dd class="lang-ja">19:00 / 20:30 / 21:30</dd>
+						<dd class="lang-ko">19:00 / 20:30 / 21:30</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 休憩時間 휴게시간</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">休憩について</dt>
+						<dt class="lang-ko">휴게시간 안내</dt>
+						<dd class="lang-ja">休憩時間は固定ではなく、状況を見ながら交代制で取ります。</dd>
+						<dd class="lang-ko">휴게시간은 고정되지 않으며 상황에 따라 교대로 진행됩니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">休憩タイミング</dt>
+						<dt class="lang-ko">휴게 타이밍</dt>
+						<dd class="lang-ja">そのため、タイミングが人によって異なる場合があります。</dd>
+						<dd class="lang-ko">사람마다 휴게 타이밍이 서로 다를 수 있습니다。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 給与について 급여 관련 안내</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">給与</dt>
+						<dt class="lang-ko">급여</dt>
+						<dd class="lang-ja">給与は1ヶ月ごとに精算し、毎月7日に振り込みます。</dd>
+						<dd class="lang-ko">급여는 1개월 단위로 정산하여 매달 7일에 입금됩니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">振込日の変更</dt>
+						<dt class="lang-ko">입금일 변경</dt>
+						<dd class="lang-ja">連休ややむを得ない事情がある場合は日程が変更になることがあります。</dd>
+						<dd class="lang-ko">연휴나 부득이한 사정이 있을 경우 날짜가 변경될 수 있습니다。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 時給・インセンティブ 시급 및 인센티브</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">時給</dt>
+						<dt class="lang-ko">시급</dt>
+						<dd class="lang-ja">時給：15,000ウォン</dd>
+						<dd class="lang-ko">시급: 15,000원</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">スタッフドリンク</dt>
+						<dt class="lang-ko">스태프 드링크</dt>
+						<dd class="lang-ja">スタッフドリンクは8,000ウォン以下のメニューのみ可能です。</dd>
+						<dd class="lang-ko">스태프 드링크는 8,000원 이하 메뉴만 가능합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">1800 テキーラ</dt>
+						<dt class="lang-ko">1800 테킬라</dt>
+						<dd class="lang-ja">「1800 テキーラ」をショットで受けた場合は、スタッフドリンク2杯分として計上します。</dd>
+						<dd class="lang-ko">1800 테킬라 원샷은 스태프 드링크 2잔으로 처리합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">シャンパン販売</dt>
+						<dt class="lang-ko">샴페인 판매</dt>
+						<dd class="lang-ja">シャンパン販売にもインセンティブがあります。</dd>
+						<dd class="lang-ko">샴페인 판매에도 인센티브가 있습니다。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> シャンパン インセンティブ 샴페인 인센티브</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">ミオ（Mio）</dt>
+						<dt class="lang-ko">미오 (Mio)</dt>
+						<dd class="lang-ja">15,000ウォン</dd>
+						<dd class="lang-ko">15,000원</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">ブラケット（Brachetto）</dt>
+						<dt class="lang-ko">브라켓토 (Brachetto)</dt>
+						<dd class="lang-ja">30,000ウォン</dd>
+						<dd class="lang-ko">30,000원</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">デミセック（Demi Sec）</dt>
+						<dt class="lang-ko">데미세크 (Demi Sec)</dt>
+						<dd class="lang-ja">40,000ウォン</dd>
+						<dd class="lang-ko">40,000원</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">シャルル・ド・フェール（Charles de Fère）</dt>
+						<dt class="lang-ko">샤를 드 페르 (Charles de Fère)</dt>
+						<dd class="lang-ja">50,000ウォン</dd>
+						<dd class="lang-ko">50,000원</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">ボッテガ（Bottega）</dt>
+						<dt class="lang-ko">보테가 (Bottega)</dt>
+						<dd class="lang-ja">80,000ウォン</dd>
+						<dd class="lang-ko">80,000원</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">モエ・エ・シャンドン・ロゼ（Moët &amp; Chandon Rosé）</dt>
+						<dt class="lang-ko">모엣 샹동 로제 (Moët &amp; Chandon Rosé)</dt>
+						<dd class="lang-ja">100,000ウォン</dd>
+						<dd class="lang-ko">100,000원</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">テキーラ観覧車（Tequila Ferris Wheel）</dt>
+						<dt class="lang-ko">테킬라 관람차 (Tequila Ferris Wheel)</dt>
+						<dd class="lang-ja">30,000ウォン</dd>
+						<dd class="lang-ko">30,000원</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">1800 テキーラ（1800 Tequila）</dt>
+						<dt class="lang-ko">1800 테킬라 (1800 Tequila)</dt>
+						<dd class="lang-ja">100,000ウォン</dd>
+						<dd class="lang-ko">100,000원</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">ベル・エポック（Belle Époque）</dt>
+						<dt class="lang-ko">벨 에포크 (Belle Époque)</dt>
+						<dd class="lang-ja">200,000ウォン</dd>
+						<dd class="lang-ko">200,000원</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">ドン・ペリニヨン（Dom Pérignon）</dt>
+						<dt class="lang-ko">돔 페리뇽 (Dom Pérignon)</dt>
+						<dd class="lang-ja">400,000ウォン</dd>
+						<dd class="lang-ko">400,000원</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 仕事内容 업무 내용</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">お客様とのコミュニケーション</dt>
+						<dt class="lang-ko">손님과의 소통 및 대화</dt>
+						<dd class="lang-ja">お客様とのコミュニケーション</dd>
+						<dd class="lang-ko">손님과의 소통 및 대화</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">ドリンクの作成・提供</dt>
+						<dt class="lang-ko">드링크 제조 및 제공</dt>
+						<dd class="lang-ja">ドリンクの作成・提供</dd>
+						<dd class="lang-ko">드링크 제조 및 제공</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">店内の雰囲気づくり・チームワークへの協力</dt>
+						<dt class="lang-ko">매장 분위기 유지 및 팀워크 협조</dt>
+						<dd class="lang-ja">店内の雰囲気づくり・チームワークへの協力</dd>
+						<dd class="lang-ko">매장 분위기 유지 및 팀워크 협조</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">店舗の整理・清掃</dt>
+						<dt class="lang-ko">매장 정리 및 청소</dt>
+						<dd class="lang-ja">店舗の整理・清掃</dd>
+						<dd class="lang-ko">매장 정리 및 청소</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3>外部飲食物持ち込み禁止規定 외부 음식물 반입 금지 규정</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">勤務中の外部飲食物</dt>
+						<dt class="lang-ko">근무 중 외부 음식물</dt>
+						<dd class="lang-ja">勤務中のスタッフは、店内において外部店舗の飲食物を摂取することを禁止します。</dd>
+						<dd class="lang-ko">근무 중 직원은 매장 내에서 외부 음식점의 음식물을 섭취하는 것을 금지합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">お客様と一緒に食べる行為</dt>
+						<dt class="lang-ko">손님과 함께 먹는 행위</dt>
+						<dd class="lang-ja">お客様と一緒に外部飲食物を食べる行為も禁止とします。</dd>
+						<dd class="lang-ko">손님과 함께 외부 음식물을 먹는 행위도 금지합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">持ち込みについて</dt>
+						<dt class="lang-ko">반입 관련</dt>
+						<dd class="lang-ja">当店は飲食物を提供する店舗であるため、外部からの飲食物の持ち込みは、いかなる場合でも認められておりません。</dd>
+						<dd class="lang-ko">당사는 음식과 음료를 제공하는 매장이므로 외부 음식물 반입은 어떤 경우에도 허용되지 않습니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">違反時</dt>
+						<dt class="lang-ko">위반 시</dt>
+						<dd class="lang-ja">本規定に違反した場合、社内規定に基づき注意またはペナルティが科される場合があります。</dd>
+						<dd class="lang-ko">본 규정 위반 시 내부 규정에 따라 주의 또는 패널티가 부과될 수 있습니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">遵守</dt>
+						<dt class="lang-ko">준수</dt>
+						<dd class="lang-ja">全スタッフは本規定を理解し、必ず遵守してください。</dd>
+						<dd class="lang-ko">전 직원은 본 규정을 이해하고 반드시 준수해야 합니다。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 撮影・SNSに関するルール 촬영 및 SNS 관련 규칙</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">公式SNS</dt>
+						<dt class="lang-ko">공식 SNS</dt>
+						<dd class="lang-ja">当店は公式SNS（Instagram / TikTok）を運営しています。</dd>
+						<dd class="lang-ko">우리 매장은 공식 SNS(인스타그램/틱톡)를 운영합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">店内撮影</dt>
+						<dt class="lang-ko">매장 내 촬영</dt>
+						<dd class="lang-ja">店内では宣伝目的の写真・動画撮影が行われる場合があります。</dd>
+						<dd class="lang-ko">매장 내에서는 홍보 목적 촬영이 진행될 수 있습니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">撮影・顔出し</dt>
+						<dt class="lang-ko">촬영 및 얼굴 노출</dt>
+						<dd class="lang-ja">スタッフは、撮影および顔が映ることに同意して勤務するものとします。</dd>
+						<dd class="lang-ko">직원은 촬영 및 얼굴 노출에 동의한 것으로 간주됩니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">個人SNSへの投稿</dt>
+						<dt class="lang-ko">개인 SNS 업로드</dt>
+						<dd class="lang-ja">無断で個人SNSに店内の写真/動画を投稿することは禁止です。</dd>
+						<dd class="lang-ko">개인 SNS에 매장 사진/영상을 무단 업로드하는 것은 금지됩니다。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3>‍ マナー・基本姿勢 매너 및 기본 자세</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">挨拶</dt>
+						<dt class="lang-ko">인사</dt>
+						<dd class="lang-ja">挨拶はスタッフ・上司・お客様全員に対して必ず丁寧に行うこと。</dd>
+						<dd class="lang-ko">인사는 직원·상사·손님 모두에게 정중하게 실시합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">基本姿勢</dt>
+						<dt class="lang-ko">기본 자세</dt>
+						<dd class="lang-ja">常に明るい態度・清潔な服装・積極的なサービス精神を意識しましょう。</dd>
+						<dd class="lang-ko">밝은 태도·청결한 복장·적극적인 서비스 정신을 유지합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">服装</dt>
+						<dt class="lang-ko">복장</dt>
+						<dd class="lang-ja">スリッパ、ジャージ、過度にカジュアルまたはだらしない服装は禁止です。</dd>
+						<dd class="lang-ko">슬리퍼·츄리닝 등 후줄근한 복장 금지。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">スマホ</dt>
+						<dt class="lang-ko">휴대폰</dt>
+						<dd class="lang-ja">勤務中のスマホ使用は禁止です（緊急時のみ店長の許可で使用可）。</dd>
+						<dd class="lang-ko">근무 중 휴대폰 사용 금지 (긴급 시 점장 허가 시 사용 가능)。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 内部情報取扱いルール 내부 정보 공유 금지 규칙</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">内部情報</dt>
+						<dt class="lang-ko">내부 정보</dt>
+						<dd class="lang-ja">店内ルール、給与体系、インセンティブの仕組み、スタッフ情報などの内部情報はお客様に口外禁止です。</dd>
+						<dd class="lang-ko">매장 규칙·급여 체계·인센티브·직원 정보 등 내부 정보는 손님에게 절대 말하지 않습니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">質問された場合</dt>
+						<dt class="lang-ko">질문받았을 경우</dt>
+						<dd class="lang-ja">質問された場合は「従業員規則によりお答えできません」と統一して回答してください。</dd>
+						<dd class="lang-ko">질문받아도 “직원 규칙상 답변 불가합니다”로 통일합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">違反時</dt>
+						<dt class="lang-ko">위반 시</dt>
+						<dd class="lang-ja">違反時は懲戒または契約終了の対象となります。</dd>
+						<dd class="lang-ko">위반 시 징계 또는 계약 종료 대상입니다。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 食事・同伴に関するルール 식사 및 동반 관련 규칙</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">出勤前の食事</dt>
+						<dt class="lang-ko">출근 전 식사</dt>
+						<dd class="lang-ja">出勤前にお客様と個人的に食事をすることは可能です。ただし、食事後に必ず当店へ来店していただくことを前提とします。</dd>
+						<dd class="lang-ko">출근 전 손님과 개인 식사는 가능하나, 식사 후 반드시 우리 매장 방문을 전제로 합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">報告</dt>
+						<dt class="lang-ko">보고</dt>
+						<dd class="lang-ja">出勤前にお客様と食事をする場合は、必ず店長またはマネージャーに報告してください。</dd>
+						<dd class="lang-ko">출근 전 손님과 식사를 하게 될 경우, 반드시 점장 또는 매니저에게 보고해야 합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">退勤後の食事・飲み会</dt>
+						<dt class="lang-ko">퇴근 후 식사·술자리</dt>
+						<dd class="lang-ja">退勤後にお客様と食事・飲み会をすることは禁止です。ただし、店長・副店長・アルバイトリーダーに限り例外的に許可されます。</dd>
+						<dd class="lang-ko">퇴근 후 손님과의 식사/술자리는 금지. 단, 점장·부점장·알바리더는 예외적으로 허용됩니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">誘われた場合</dt>
+						<dt class="lang-ko">제안받았을 경우</dt>
+						<dd class="lang-ja">退勤後に「食事に行こう」「一杯だけ」などと誘われた場合でも、本規則があることを伝え、必ず丁寧にお断りしてください。</dd>
+						<dd class="lang-ko">“같이 식사하자”, “한 잔만 하자” 등의 제안을 받더라도 퇴근 후 동반 금지 규칙이 있다고 말하고 정중히 거절합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">違反時</dt>
+						<dt class="lang-ko">위반 시</dt>
+						<dd class="lang-ja">本規則を違反した場合、会社の判断により懲戒または契約解除（解雇）の対象となる場合があります。※事実確認および社内規定に基づく正式手続きを経て決定します。</dd>
+						<dd class="lang-ko">위반 시 회사 판단에 따라 징계 또는 계약해지(해고) 대상이 될 수 있으며, 사실 확인 및 내부 절차를 거쳐 결정됩니다。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3>スタッフ同士の私的な食事・飲み会について 직원 간 사적 식사·술자리 관련</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">私的な食事・飲み会</dt>
+						<dt class="lang-ko">개인적 식사·술자리</dt>
+						<dd class="lang-ja">スタッフ同士で、私的に食事や飲み会をすることは禁止です。ただし、店長・副店長・オーナーが同席する場合に限り、例外的に許可されます。</dd>
+						<dd class="lang-ko">직원들끼리 개인적으로 식사나 술자리를 가지는 것은 금지입니다. 단, 점장·부점장·사장이 함께하는 경우에 한해 예외적으로 허용됩니다。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 社内恋愛・顧客との恋愛について 사내연애 및 손님과의 연애 관련</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">社内恋愛</dt>
+						<dt class="lang-ko">사내연애</dt>
+						<dd class="lang-ja">社内恋愛（スタッフ同士の恋愛関係）は禁止とします。</dd>
+						<dd class="lang-ko">사내연애(직원 간 연애 관계)는 금지합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">お客様との恋愛・私的交際</dt>
+						<dt class="lang-ko">손님과의 연애 및 사적 교제</dt>
+						<dd class="lang-ja">業務上関わりのあるお客様との恋愛関係・私的交際も一切禁止とします。</dd>
+						<dd class="lang-ko">업무상 관계가 있는 손님과의 연애 및 사적인 교제 또한 일절 금지합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">業務への影響</dt>
+						<dt class="lang-ko">업무에 미치는 영향</dt>
+						<dd class="lang-ja">社内恋愛またはお客様との恋愛・私的関係により、職場の秩序・業務進行・他スタッフや店舗運営に影響が生じた場合、会社の判断により指導・配置転換・懲戒の対象となる場合があります。</dd>
+						<dd class="lang-ko">사내 연애 또는 손님과의 연애·사적 관계로 인해 근무 질서, 업무 진행, 다른 직원이나 매장 운영에 영향이 발생할 경우 회사 판단에 따라 지도, 근무 배치 변경, 징계 대상이 될 수 있습니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">違反時</dt>
+						<dt class="lang-ko">위반 시</dt>
+						<dd class="lang-ja">本規則を違反した場合、事実確認および社内規定に基づく正式手続きを経て、懲戒または契約解除（解雇）の対象となる場合があります。</dd>
+						<dd class="lang-ko">본 규칙 위반 시 사실 확인 및 내부 규정에 따른 절차를 거쳐 징계 또는 계약해지(해고) 대상이 될 수 있습니다。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> トラブル対応 문제 상황 대처</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">不快な発言・過度な接触</dt>
+						<dt class="lang-ko">불쾌 발언·과도한 접촉</dt>
+						<dd class="lang-ja">お客様から不快な発言や過度な接触があった場合は、すぐに店長に報告してください。</dd>
+						<dd class="lang-ko">불쾌 발언·과도한 접촉 시 즉시 점장에게 보고합니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">会計・忘れ物・クレーム</dt>
+						<dt class="lang-ko">계산·분실물·클레임</dt>
+						<dd class="lang-ja">会計・忘れ物・クレームなどは個人判断禁止、必ず上司に報告してください。</dd>
+						<dd class="lang-ko">계산·분실물·분쟁은 개인 판단 금지, 상급자에게 반드시 보고합니다。</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="menu recipe-section">
+				<h3> 最後に 마무리</h3>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">マニュアルについて</dt>
+						<dt class="lang-ko">매뉴얼 안내</dt>
+						<dd class="lang-ja">このマニュアルは、新しく入ったスタッフがスムーズに馴染み、楽しく働けるように作成しました。</dd>
+						<dd class="lang-ko">이 매뉴얼은 신입 스태프가 빠르게 적응하고 즐겁게 일할 수 있도록 만든 가이드입니다。</dd>
+					</dl>
+				</div>
+				<div class="recipe-item">
+					<dl>
+						<dt class="lang-ja">質問・相談</dt>
+						<dt class="lang-ko">문의</dt>
+						<dd class="lang-ja">不明な点があれば、いつでも店長またはマネージャーにお声かけください。</dd>
+						<dd class="lang-ko">궁금한 점이 있으면 언제든 점장 또는 매니저에게 문의해 주세요。</dd>
+					</dl>
+				</div>
+			</div>
+
+		<script src="assets/js/main.js"></script>
+		<script>
+			function checkPassword() {
+				const entered = document.getElementById('passInput').value;
+				if (entered === '6974') {
+					document.getElementById('password-screen').style.display = 'none';
+					document.getElementById('recipe-content').style.display = 'block';
+					switchLanguage('ja');
+				} else {
+					alert('Wrong Password');
+				}
+			}
+
+			document.getElementById('passInput').addEventListener('keypress', function(e) {
+				if (e.key === 'Enter') {
+					checkPassword();
+				}
+			});
+
+			let currentLang = 'ja';
+
+			function switchLanguage(lang) {
+				currentLang = lang;
+				document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+				document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
+
+				if (lang === 'ja') {
+					document.querySelectorAll('.lang-ja').forEach(el => el.style.display = (el.tagName === 'SPAN' ? 'inline' : 'block'));
+					document.querySelectorAll('.lang-ko').forEach(el => el.style.display = 'none');
+					document.getElementById('recipeSearch').placeholder = 'レシピを検索...';
+				} else {
+					document.querySelectorAll('.lang-ja').forEach(el => el.style.display = 'none');
+					document.querySelectorAll('.lang-ko').forEach(el => el.style.display = (el.tagName === 'SPAN' ? 'inline' : 'block'));
+					document.getElementById('recipeSearch').placeholder = '레시피 검색...';
+				}
+				filterRecipes();
+			}
+
+			function filterRecipes() {
+				const input = document.getElementById('recipeSearch').value.toLowerCase();
+				const items = document.querySelectorAll('.recipe-item');
+
+				items.forEach(item => {
+					const keywords = item.getAttribute(`data-keywords-${currentLang}`).toLowerCase();
+					if (keywords.includes(input)) {
+						item.style.display = "block";
+					} else {
+						item.style.display = "none";
+					}
+				});
+
+				const sections = document.querySelectorAll('.recipe-section');
+				sections.forEach(sec => {
+					const visibleItems = sec.querySelectorAll('.recipe-item[style="display: block;"], .recipe-item:not([style*="display: none"])');
+					if (visibleItems.length === 0) {
+						sec.style.display = 'none';
+					} else {
+						sec.style.display = 'block';
+					}
+				});
+			}
+		</script>
+	</body>
+</html>
