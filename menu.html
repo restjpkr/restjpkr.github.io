@@ -9,27 +9,34 @@
 	</head>
 	<body>
 
-		<header id="header">
-			<div>
-				<h2 class="page-title">メニュー 메뉴</h2>
-			</div>
+		
+		<header id="header" style="max-width: 700px; margin: 0 auto; padding: 14px 0 8px; position: relative; text-align: center;">
+			<a href="index.html" style="position: absolute; left: 0; top: 12px; font-size: 13px; border: 1px solid rgba(255,255,255,0.3); padding: 5px 12px; border-radius: 4px; color: #fff; text-decoration: none; white-space: nowrap;">← トップ</a>
+			<h2 class="page-title" style="margin: 0; font-size: 1.3em; display: inline-block;">メニュー 메뉴</h2>
 		</header>
+
 
 		<main class="main-content">
 
-			<div class="menu info-card">
-				<p>
-					注文は決まり次第、スタッフにお声がけください<br>
-					1時間1杯の注文がない場合、1時間あたり5,000ウォンのチャージ料が発生します<br>
-					VIPルームは、ボトルのご注文、2本以上から案内可能になります! 料金につきましては、スタッフまで!
-				</p>
-				<hr>
-				<p>
-					주문이 결정되시면 직원에게 말씀해주세요<br>
-					1시간에 1잔 주문하지 않을 경우 1시간당 5,000원씩 이용요금이 부과됩니다<br>
-					VIP룸은 보틀 주문 2병 이상부터 안내 가능합니다! 요금은 직원에게 문의해주세요!
-				</p>
+			
+			<div style="text-align: center; margin: 14px 0 18px; color: #ccc; font-size: 14px; line-height: 1.5;">
+				注文が決まり次第、スタッフにお声がけください<br>
+				<span style="font-size: 12px; color: #888;">주문이 결정되시면 직원에게 말씀해 주세요</span>
 			</div>
+
+			<div style="text-align: center; margin: 0 auto 30px; max-width: 500px; padding: 4px 0;">
+				<div style="margin-bottom: 16px;">
+					<div style="color: #1cb495; font-size: 14px; font-weight: bold; margin-bottom: 4px;">ホンデ店 | 홍대점</div>
+					<div style="font-size: 14px; color: #fff; letter-spacing: 0.5px; line-height: 1.6;">서윤 / 사쿠라 / 세이야</div>
+					<div style="font-size: 13px; color: #bbb; letter-spacing: 0.5px; line-height: 1.5;">ソユン / さくら / せいや</div>
+				</div>
+				<div>
+					<div style="color: #1cb495; font-size: 14px; font-weight: bold; margin-bottom: 4px;">明洞店 | 명동점</div>
+					<div style="font-size: 14px; color: #fff; letter-spacing: 0.5px; line-height: 1.6;">필립 / 우영 / 한빈</div>
+					<div style="font-size: 13px; color: #bbb; letter-spacing: 0.5px; line-height: 1.5;">フィリップ / ウヨン / ハンビン</div>
+				</div>
+			</div>
+
 			
 			<div class="menu">
 				<h3>シャンパン 샴페인</h3>
@@ -70,8 +77,8 @@
 					<dd>1,200,000원</dd>
 				</dl>
 				<dl>
-					<dt>ドン・ペリニヨン</dt>
-					<dt>돔 페리뇽</dt>
+					<dt>ドンペリニョン</dt>
+					<dt>돔페리뇽</dt>
 					<dd>2,000,000원</dd>
 				</dl>
 			</div>
@@ -419,53 +426,87 @@
 			</div>
 			
 
-			<div class="menu rules-card">
-				<h4>案内事項</h4>
-				<p>-他のお客様のスペース確保にご協力をお願いいたします。<br>
-					-他のお客様に不快感を与えたり、案内事項に従っていただけない場合、スタッフの判断で退店および出入り禁止の処置を取らせていただきます。
-				</p>
-				<hr>
-				<h4>안내사항</h4>
-				<p>
-					-다른 손님의 공간 확보를 위해 적극적으로 협조해주셔야 합니다.<br>
-					-다른 손님께 불쾌감을 조성하는 경우와 안내사항에 따르지 않는 경우, 직원의 판단에 의해 퇴장 및 입장금지 처분을 받을 수 있습니다.
-				</p>
+			
+			<!-- Stylish Notice Card -->
+			<div class="menu-notice-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 22px 20px; margin: 36px auto 20px; max-width: 700px;">
+				<div style="font-size: 13px; font-weight: bold; letter-spacing: 1px; color: #1cb495; margin-bottom: 12px; text-transform: uppercase;">
+					案内事項 <span style="color: rgba(255,255,255,0.4); font-weight: normal; margin-left: 6px;">안내사항</span>
+				</div>
+				<div style="font-size: 13px; line-height: 1.7; color: rgba(255, 255, 255, 0.85); margin-bottom: 14px;">
+					<p style="margin: 0 0 6px; padding-left: 14px; position: relative;">
+						<span style="position: absolute; left: 0; color: #1cb495;">•</span>
+						他のお客様のスペース確保にご協力をお願いいたします。
+					</p>
+					<p style="margin: 0; padding-left: 14px; position: relative;">
+						<span style="position: absolute; left: 0; color: #1cb495;">•</span>
+						他のお客様に不快感を与えたり、案内事項に従っていただけない場合、スタッフの判断で退店および出入り禁止の処置を取らせていただきます。
+					</p>
+				</div>
+				<div style="border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 12px; font-size: 12px; line-height: 1.6; color: rgba(255, 255, 255, 0.55);">
+					<p style="margin: 0 0 4px; padding-left: 14px; position: relative;">
+						<span style="position: absolute; left: 0; color: rgba(255,255,255,0.4);">•</span>
+						다른 손님의 공간 확보를 위해 적극적으로 협조해주셔야 합니다.
+					</p>
+					<p style="margin: 0; padding-left: 14px; position: relative;">
+						<span style="position: absolute; left: 0; color: rgba(255,255,255,0.4);">•</span>
+						다른 손님께 불쾌감을 조성하는 경우와 안내사항에 따르지 않는 경우, 직원의 판단에 의해 퇴장 및 입장금지 처분을 받을 수 있습니다.
+					</p>
+				</div>
 			</div>
 
-			<div class="menu info-card">
-				<h4>REST</h4>
-				<p>
-					スタッフ全員日本人! 日本語オンリーの韓国1面白いジャパニーズバー<br>
-					모든 스태프가 일본인! 일본어 전용 대화로 한국에서 제일 즐거운 재페니즈 펍<br>
-					VIPルーム完備！ VIP룸 완비!<br><br>
-					OPEN 18:00-03:00 / 年中無休 연중무휴<br>
-					주소 住所 : 서울 서대문구 창천동 33-17 3층<br><br>
-					Instagram : <a href="https://www.instagram.com/rest_jpkr" target="_blank" style="color: rgba(212, 175, 55); font-weight: bold;">@rest_jpkr</a><br>
-					3F WiFi : <span>restdaisuki</span><br>
-					B1 WiFi : <span>restdaisuki1</span>
-				</p>
-				<hr>
-				<h4>MANKIN HONGDAE</h4>
-				<p>
+			<!-- Stylish Store Info Cards -->
+			<div class="menu-store-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 22px 20px; margin: 0 auto 16px; max-width: 700px;">
+				<div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 10px;">
+					<h4 style="margin: 0; font-size: 1.05rem; font-weight: bold; letter-spacing: 1px; color: #fff;">MANKIN HONGDAE</h4>
+					<span style="font-size: 12px; color: #1cb495; font-weight: 500;">OPEN 18:00 - 03:00 / 年中無休</span>
+				</div>
+				<p style="font-size: 12px; color: rgba(255, 255, 255, 0.6); margin: 0 0 12px; line-height: 1.5;">
 					日本語、韓国語、ハンボノで楽しめるジャパニーズバー<br>
-					한국어, 일본어, 한본어 가능한 재페니즈 펍<br><br>
-					OPEN 18:00-03:00 / 年中無休 연중무휴<br>
-					주소 住所 : 서울 마포구 상수동 310-19 2층<br><br>
-					Instagram : <a href="https://www.instagram.com/mankin_jpkr" target="_blank" style="color: #2f4f4f; font-weight: bold;">@mankin_jpkr</a><br>
-					WiFi : <span>mankin1234</span>
+					<span style="color: rgba(255, 255, 255, 0.4);">한국어, 일본어, 한본어 가능한 재페니즈 펍</span>
 				</p>
-				<hr>
-				<h4>MANKIN MYEONDONG</h4>
-				<p>
-					プライベートなVIPルームまで完備の日本語、韓国語、ハンボノで楽しめるジャパニーズバー<br>
-					프라이빗한 VIP룸까지 완비된 일본어, 한국어, 한본어로 즐거운 재페니즈 바<br><br>
-					OPEN 18:00-03:00 / 年中無休 연중무휴<br>
-					주소 住所 : 서울 중구 저동2가 48-25 4,5층<br><br>
-					Instagram : <a href="https://www.instagram.com/mankin2_jpkr" target="_blank" style="color: #2f4f4f; font-weight: bold;">@mankin2_jpkr</a><br>
-					WiFi : <span>???</span>
+				<div style="font-size: 13px; color: rgba(255, 255, 255, 0.8); line-height: 1.8;">
+					<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px;">
+						<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Address</span>
+						<span>서울 마포구 상수동 310-19 2층</span>
+					</div>
+					<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px;">
+						<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Instagram</span>
+						<a href="https://www.instagram.com/mankin_jpkr" target="_blank" style="color: #1cb495; text-decoration: none; font-weight: 500;">@mankin_jpkr ↗</a>
+					</div>
+					<div style="display: flex; gap: 8px; align-items: center;">
+						<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Wi-Fi</span>
+						<span style="font-family: monospace; color: #ddd; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 4px; font-size: 12px;">mankin1234</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="menu-store-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 22px 20px; margin: 0 auto 24px; max-width: 700px;">
+				<div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 10px;">
+					<h4 style="margin: 0; font-size: 1.05rem; font-weight: bold; letter-spacing: 1px; color: #fff;">MANKIN MYEONGDONG</h4>
+					<span style="font-size: 12px; color: #1cb495; font-weight: 500;">OPEN 18:00 - 03:00 / 年中無休</span>
+				</div>
+				<p style="font-size: 12px; color: rgba(255, 255, 255, 0.6); margin: 0 0 12px; line-height: 1.5;">
+					プライベートVIPルーム完備のジャパニーズバー<br>
+					<span style="color: rgba(255, 255, 255, 0.4);">프라이빗 VIP룸 완비 재페니즈 바</span>
 				</p>
+				<div style="font-size: 13px; color: rgba(255, 255, 255, 0.8); line-height: 1.8;">
+					<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px;">
+						<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Address</span>
+						<span>서울 중구 저동2가 48-25 4,5층</span>
+					</div>
+					<div style="display: flex; gap: 8px; align-items: center;">
+						<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Instagram</span>
+						<a href="https://www.instagram.com/mankin2_jpkr" target="_blank" style="color: #1cb495; text-decoration: none; font-weight: 500;">@mankin2_jpkr ↗</a>
+					</div>
+				</div>
+			</div>
+
+		
+			<div class="menu" style="text-align: center; margin-top: 30px;">
+				<a href="index.html" class="button" style="display: inline-block; padding: 12px 28px; border: 1px solid #1cb495; color: #1cb495; text-decoration: none; border-radius: 4px; font-weight: bold;">トップに戻る / 홈으로</a>
 			</div>
 		</main>
+
 
 		<footer id="footer" style="padding-bottom: 60px;">
 			<div>
