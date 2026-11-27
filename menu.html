@@ -7,10 +7,51 @@
 		<link rel="stylesheet" href="assets/css/menu.css" />
 		<style>
 			body { background-color: #0d161a; }
+
+			/* 모바일 가독성: 일본어명/한국어명을 세로로, 가격은 오른쪽 한 줄로 (601px 이상은 기존 3열 그대로) */
+			@media screen and (max-width: 600px) {
+				body.menu-page .menu dl {
+					display: grid;
+					grid-template-columns: minmax(0, 1fr) auto;
+					column-gap: 10px;
+					align-items: center;
+				}
+				body.menu-page .menu dt {
+					display: block;
+					width: auto;
+					grid-column: 1;
+					padding: 0.1rem 0.35rem;
+					word-break: keep-all;
+					overflow-wrap: break-word;
+				}
+				body.menu-page .menu dt:first-child {
+					padding-top: 0.5rem;
+					padding-bottom: 0;
+				}
+				body.menu-page .menu dt + dt {
+					padding-top: 0.1rem;
+					padding-bottom: 0.5rem;
+				}
+				body.menu-page .menu dd,
+				body.menu-page .menu dd:last-child {
+					grid-column: 2;
+					grid-row: 1 / span 2;
+					width: auto;
+					text-align: right;
+					white-space: nowrap;
+					padding: 0.5rem 0.35rem;
+					align-self: center;
+				}
+				body.menu-page .menu h3 {
+					font-size: 1.12em;
+					line-height: 1.4;
+					word-break: keep-all;
+				}
+			}
 		</style>
 		<div class="wp-block-spacer" aria-hidden="true"></div>
 	</head>
-	<body>
+	<body class="menu-page">
 
 		
 		<header id="header" style="max-width: 700px; margin: 0 auto; padding: 14px 0 8px; position: relative; text-align: center;">
@@ -28,6 +69,7 @@
 			</div>
 
 			<div style="text-align: center; margin: 0 auto 30px; max-width: 500px; padding: 4px 0;">
+				<div style="color: #9aa8ae; font-size: 12px; letter-spacing: 1px; margin-bottom: 10px;">2026.11.27</div>
 				<div style="margin-bottom: 16px;">
 					<div style="color: #1cb495; font-size: 14px; font-weight: bold; margin-bottom: 4px;">ホンデ店 | 홍대점</div>
 					<div style="font-size: 14px; color: #fff; letter-spacing: 0.5px; line-height: 1.6;">우영 / 채린 / 세이야</div>
