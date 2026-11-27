@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>MANKIN | 従業員専用ページ 직원 전용 페이지</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" />
+		<meta name="theme-color" content="#0d161a" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="robots" content="noindex, nofollow" />
+		<link rel="stylesheet" href="assets/css/rule.css" />
+		<style>
+			/* 상단 헤더 바 (← TOP / STAFF) */
+			.page-topbar { position: relative; width: 100%; max-width: 700px; margin: 0 auto 1.6em; padding: 2px 0 0; text-align: center; }
+			.page-topbar-btn { position: absolute; left: 0; top: 12px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; height: 42px; padding: 0 14px; font-size: 13px; font-weight: 700; line-height: 1; color: #fff; text-decoration: none; background: rgba(255,255,255,0.05); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.28); border-radius: 4px; white-space: nowrap; }
+			.page-topbar-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); color: #fff !important; }
+			.page-topbar-title { display: inline-block; font-size: 1.32em; font-weight: 700; letter-spacing: 1.5px; line-height: 42px; color: #fff; }
+			/* 화면 최상단 고정 (세로 중앙 본문과 분리) */
+			body > .page-topbar { position: absolute; top: 20px; left: 20px; right: 20px; width: auto; max-width: 700px; margin: 0 auto; padding: 12px 0 0; z-index: 3; }
+
+			/* 주의사항 목록: index.html과 동일한 번호/본문 일직선·줄바꿈 규칙 */
+			#header .rules { margin: 0 0 1.5em 0; font-size: 1.35em; line-height: 1.65em; }
+			#header .rule { display: flex; align-items: flex-start; gap: 8px; }
+			#header .rule + .rule { margin-top: 1.1em; }
+			#header .rule-num { flex: 0 0 auto; min-width: 18px; }
+			#header .rule-body { flex: 1 1 auto; min-width: 0; }
+			#header .rule-jp { line-break: strict; }
+			#header .rule-kr { word-break: keep-all; }
+			@media screen and (max-width: 736px) {
+				#header .rules { font-size: 0.85em; line-height: 1.6em; }
+				#header .rule + .rule { margin-top: 1.15em; }
+			}
+			/* 데스크톱: 푸터가 버튼과 겹치지 않게 문서 흐름에 (index.html과 동일) */
+			@media screen and (min-width: 981px) {
+				#footer { position: static; margin: 3.5em 0 0 0; }
+			}
+		
+			/* iOS 안전영역·배경 꽉 채우기 (상태바/툴바 검은 띠 제거) */
+			html, body { background-color: #0d161a; }
+			body { min-height: 100dvh; }
+			/* 움직이는 배경이 iOS 상태바·주소창 뒤까지 끊김 없이 이어지도록 위아래로 넘겨 깐다 */
+			#bg { position: fixed; top: -80px; bottom: -80px; left: 0; right: 0; width: auto; height: auto; min-height: calc(100lvh + 160px); }
+			#bg > div { position: absolute; top: 0; bottom: 0; left: 0; height: auto; min-height: 100%; width: 150%; }
+			@media screen and (max-width: 736px) {
+				body { padding-top: calc(5em + env(safe-area-inset-top)); padding-bottom: calc(2em + env(safe-area-inset-bottom)); }
+			}
+			@media screen and (min-width: 737px) {
+				body { padding-top: calc(6em + env(safe-area-inset-top)); padding-bottom: calc(4em + env(safe-area-inset-bottom)); }
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+
+		<!-- 상단 헤더 바 -->
+			<div class="page-topbar">
+				<a href="index.html" class="page-topbar-btn">TOP</a>
+				<span class="page-topbar-title">STAFF</span>
+			</div>
+
+		<!-- Header -->
+			<header id="header">
+				<h1><span style="display: block;">従業員専用ページ</span><span style="display: block;">직원 전용 페이지</span></h1>
+				<div class="rules">
+					<div class="rule">
+						<span class="rule-num">1.</span>
+						<div class="rule-body">
+							<div class="rule-jp">従業員のみ閲覧可能です</div>
+							<div class="rule-kr">직원만 열람 가능합니다</div>
+						</div>
+					</div>
+					<div class="rule">
+						<span class="rule-num">2.</span>
+						<div class="rule-body">
+							<div class="rule-jp">外部への流出は厳禁です</div>
+							<div class="rule-kr">외부 유출은 엄금입니다</div>
+						</div>
+					</div>
+					<div class="rule">
+						<span class="rule-num">3.</span>
+						<div class="rule-body">
+							<div class="rule-jp">キャプチャー・画面撮影等をお客様に見せることも厳禁です</div>
+							<div class="rule-kr">캡처·화면 촬영 등을 손님에게 보여주는 것도 엄금입니다</div>
+						</div>
+					</div>
+				</div>
+			</header>
+
+			<ul class="actions fit" style="margin: 0 0 14px 0; padding: 0 0 0 1em; list-style: none;">
+				<a href="/manual" class="button special fit">マニュアル | 매뉴얼</a>
+			</ul>
+			<ul class="actions fit" style="margin: 0 0 14px 0; padding: 0 0 0 1em; list-style: none;">
+				<a href="/recipe" class="button special fit">レシピ | 레시피</a>
+			</ul>
+			<ul class="actions fit" style="margin: 0; padding: 0 0 0 1em; list-style: none;">
+				<a href="/shift" class="button special fit">スケジュール | 스케줄</a>
+			</ul>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<ul class="copyright">
+					<li>&copy; マスターとあら</li>
+				</ul>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

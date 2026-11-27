@@ -1,9 +1,12 @@
 <!DOCTYPE HTML>
-<html>
+<html class="menu-doc">
 	<head>
 		<title>MENU</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" />
+		<meta name="theme-color" content="#0d161a" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		<link rel="stylesheet" href="assets/css/menu.css" />
 		<style>
 			body { background-color: #0d161a; }
@@ -48,15 +51,65 @@
 					word-break: keep-all;
 				}
 			}
+			/* 우상단 햄버거 메뉴: 안내사항·매장정보 사이드 드로어 */
+			.menu-hdr-btn { position: absolute; top: 12px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; height: 42px; padding: 0 14px; font-family: inherit; font-size: 13px; font-weight: 700; line-height: 1; color: #fff; text-decoration: none; background: rgba(255,255,255,0.05); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.28); border-radius: 4px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+			#header a.menu-hdr-btn { left: 0; }
+			#info-toggle { right: 0; top: 12px; width: 42px; height: 42px; padding: 0; border-radius: 8px; font-size: 17px; }
+			#info-toggle svg { display: block; }
+			.menu-hdr-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
+
+			#info-backdrop { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 90; background: rgba(0,0,0,0.6); opacity: 0; pointer-events: none; transition: opacity 0.26s ease; }
+			#info-backdrop.open { opacity: 1; pointer-events: auto; }
+
+			#info-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 91; display: flex; flex-direction: column; box-sizing: border-box; width: 88%; max-width: 420px; background: #0d161a; border-left: 1px solid rgba(255,255,255,0.12); box-shadow: -10px 0 32px rgba(0,0,0,0.5); transform: translateX(101%); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); visibility: hidden; }
+			#info-drawer.open { transform: translateX(0); visibility: visible; }
+			#info-drawer .drawer-head { flex: none; display: flex; justify-content: flex-end; align-items: center; height: 46px; padding: 0 6px 0 0; }
+			#info-drawer .drawer-close { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; font-family: inherit; font-size: 25px; font-weight: 300; line-height: 1; color: rgba(255,255,255,0.55); background: transparent; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+			#info-drawer .drawer-close:hover { color: #fff; }
+			#info-drawer .drawer-body { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 13px 34px; }
+			body.drawer-open { overflow: hidden; }
+
+			/* 문서 스크롤·가로 오버플로 정리 (sticky 정상 동작 + 우측 가격 잘림 방지) */
+			html.menu-doc { height: auto; overflow-x: clip; }
+			body.menu-page { height: auto; min-height: 100%; overflow-x: clip; }
+
+			/* 구분선 통일: 섹션 제목 아래 1px 한 줄 + 행 구분 1px, 모두 같은 좌우 폭 */ 
+			body.menu-page .menu dl { border: 0; border-bottom: 1px solid rgba(255,255,255,0.18); table-layout: fixed; }
+			body.menu-page .menu h3 { border-bottom: 1px solid rgba(255,255,255,0.45); padding-bottom: 9px; margin-bottom: 0; }
+
+			/* 출근표 박스: 은은한 유리 질감 (매일 12시 치환되는 인라인 스타일은 그대로 두고 CSS로만 적용) */
+			body.menu-page main > div[style*="border-radius: 16px"] { background: rgba(255,255,255,0.03) !important; border: 1px solid rgba(255,255,255,0.25) !important; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); }
+
+			/* 상단 카테고리 점프 탭 */
+			#cat-nav { position: sticky; top: 0; z-index: 60; margin: 0 -20px 18px; background: rgba(13,22,26,0.72); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,0.1); }
+			#cat-nav .cat-nav-inner { display: flex; gap: 7px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; max-width: 700px; margin: 0 auto; padding: 8px 20px; }
+			#cat-nav .cat-nav-inner::-webkit-scrollbar { display: none; }
+			#cat-nav .cat-chip { flex: 0 0 auto; display: inline-flex; align-items: center; height: 32px; padding: 0 13px; font-size: 12px; letter-spacing: 0.5px; line-height: 1; color: #c9d4d8; text-decoration: none; white-space: nowrap; background: rgba(255,255,255,0.05); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.18); border-radius: 16px; transition: color 0.15s, border-color 0.15s, background 0.15s; }
+			#cat-nav .cat-chip:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+			#cat-nav .cat-chip.active { color: #1cb495; border-color: rgba(28,180,149,0.75); background: rgba(28,180,149,0.12); font-weight: 600; }
+			.menu[id^="cat-"] { scroll-margin-top: 58px; }
+
+			/* 우하단 맨 위로 버튼 */
+			#to-top { position: fixed; right: 16px; bottom: 20px; z-index: 70; display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; padding: 0; font-family: inherit; font-size: 19px; line-height: 1; color: #1cb495; background: rgba(13,22,26,0.72); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border: 1px solid rgba(28,180,149,0.7); border-radius: 50%; box-shadow: 0 4px 16px rgba(0,0,0,0.45); cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s; -webkit-tap-highlight-color: transparent; }
+			#to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+			#to-top:hover { background: rgba(28,180,149,0.16); }
+			body.drawer-open #to-top { opacity: 0; visibility: hidden; }
+		
+			/* iOS 안전영역·배경 꽉 채우기 (상태바/툴바 검은 띠 제거) */
+			html, body { background-color: #0d161a; min-height: 100dvh; }
+			body.menu-page { padding-top: calc(20px + env(safe-area-inset-top)); padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+			#cat-nav { top: env(safe-area-inset-top); }
+			#to-top { bottom: calc(20px + env(safe-area-inset-bottom)); }
 		</style>
 		<div class="wp-block-spacer" aria-hidden="true"></div>
 	</head>
 	<body class="menu-page">
 
 		
-		<header id="header" style="max-width: 700px; margin: 0 auto; padding: 14px 0 8px; position: relative; text-align: center;">
-			<a href="index.html" style="position: absolute; left: 0; top: 12px; font-size: 13px; border: 1px solid rgba(255,255,255,0.3); padding: 5px 12px; border-radius: 4px; color: #fff; text-decoration: none; white-space: nowrap;">← トップ</a>
-			<h2 class="page-title" style="margin: 0; font-size: 1.3em; display: inline-block;">メニュー 메뉴</h2>
+		<header id="header" style="max-width: 700px; margin: 0 auto; padding: 12px 0 8px; position: relative; text-align: center;">
+			<a href="index.html" class="menu-hdr-btn" style="white-space: nowrap;">TOP</a>
+			<h2 class="page-title" style="margin: 0; font-size: 1.32em; line-height: 42px; letter-spacing: 1.5px; display: inline-block;">MENU</h2>
+			<button type="button" id="info-toggle" class="menu-hdr-btn" aria-label="案内事項・店舗情報" aria-controls="info-drawer" aria-expanded="false"><svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true" focusable="false"><path d="M4 6.5h16M4 12h16M4 17.5h16" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" fill="none"></path></svg></button>
 		</header>
 
 
@@ -68,7 +121,7 @@
 				<span style="font-size: 12px; color: #888;">주문이 결정되시면 직원에게 말씀해 주세요</span>
 			</div>
 
-			<div style="text-align: center; margin: 0 auto 30px; max-width: 500px; padding: 4px 0;">
+			<div style="text-align: center; margin: 0 auto 30px; max-width: 500px; box-sizing: border-box; padding: 16px 20px; border: 1px solid rgba(255,255,255,0.4); border-radius: 16px;">
 				<div style="color: #9aa8ae; font-size: 12px; letter-spacing: 1px; margin-bottom: 10px;">2026.11.27</div>
 				<div style="margin-bottom: 16px;">
 					<div style="color: #1cb495; font-size: 14px; font-weight: bold; margin-bottom: 4px;">ホンデ店 | 홍대점</div>
@@ -82,8 +135,24 @@
 				</div>
 			</div>
 
+			<nav id="cat-nav" aria-label="カテゴリー移動 / 카테고리 이동">
+				<div class="cat-nav-inner">
+					<a href="#cat-champagne" class="cat-chip" data-target="cat-champagne">CHAMPAGNE</a>
+					<a href="#cat-beer" class="cat-chip" data-target="cat-beer">BEER</a>
+					<a href="#cat-wine" class="cat-chip" data-target="cat-wine">WINE</a>
+					<a href="#cat-sour" class="cat-chip" data-target="cat-sour">SOUR</a>
+					<a href="#cat-cocktail" class="cat-chip" data-target="cat-cocktail">COCKTAIL</a>
+					<a href="#cat-shochu" class="cat-chip" data-target="cat-shochu">SHOCHU</a>
+					<a href="#cat-soft" class="cat-chip" data-target="cat-soft">SOFT</a>
+					<a href="#cat-whisky" class="cat-chip" data-target="cat-whisky">WHISKY</a>
+					<a href="#cat-whisky-bottle" class="cat-chip" data-target="cat-whisky-bottle">WHISKY BOTTLE</a>
+					<a href="#cat-shochu-bottle" class="cat-chip" data-target="cat-shochu-bottle">SHOCHU BOTTLE</a>
+					<a href="#cat-food" class="cat-chip" data-target="cat-food">FOOD</a>
+				</div>
+			</nav>
+
 			
-			<div class="menu">
+			<div class="menu" id="cat-champagne">
 				<h3>シャンパン 샴페인</h3>
 				<dl>
 					<dt>ボッテガ ミニ</dt>
@@ -128,7 +197,7 @@
 				</dl>
 			</div>
 							
-			<div class="menu">   
+			<div class="menu" id="cat-beer">   
 				<h3 class="title">生ビール/ビールカクテル 생맥주/맥주칵테일</h3>
 				<dl>
 					<dt>プレミアムモルツ</dt><dt>프리미엄 몰츠</dt>
@@ -144,7 +213,7 @@
 				</dl>
 			</div>
 			
-			<div class="menu">
+			<div class="menu" id="cat-wine">
 				<h3>ワイン 와인</h3>
 				<dl>
 					<dt>ホワイト 150ml</dt><dt>화이트 150ml</dt>
@@ -160,7 +229,7 @@
 				</dl>
 			</div>
 
-			<div class="menu">   
+			<div class="menu" id="cat-sour">   
 				<h3>サワー 사와</h3>
 				<dl>
 					<dt>レモンサワー</dt><dt>레몬사와</dt>
@@ -192,7 +261,7 @@
 				</dl>
 			</div>				
 
-			<div class="menu">   
+			<div class="menu" id="cat-cocktail">   
 				<h3>カクテル 칵테일</h3>
 				<dl>
 					<dt>ハイボール</dt><dt>하이볼</dt>
@@ -288,7 +357,7 @@
 				</dl>
 			</div>
 			
-			<div class="menu">
+			<div class="menu" id="cat-shochu">
 				<h3>焼酎/焼酎ベース 소주/소주베이스</h3>
 				<dl>
 					<dt>ウーロンハイ</dt><dt>우롱하이</dt>
@@ -312,7 +381,7 @@
 				</dl>	
 			</div>
 	
-			<div class="menu">   
+			<div class="menu" id="cat-soft">   
 				<h3>ソフトドリンク   소프트드링크</h3>
 				<dl>
 					<dt>コカコーラ</dt><dt>코카콜라</dt>
@@ -348,7 +417,7 @@
 				</dl>
 			</div>
 			
-			<div class="menu">
+			<div class="menu" id="cat-whisky">
 				<h3>ウイスキー/ショット 위스키/샷</h3>
 				<dl>
 					<dt>テキーラ観覧車(12ショット)</dt><dt>데킬라 관람차(12샷)</dt>
@@ -373,6 +442,38 @@
 				<dl>
 					<dt>ジャックダニエル</dt><dt>잭다니엘</dt>
 					<dd>10,000원</dd>
+				</dl>
+				<dl>
+					<dt>ベルズハイボール</dt><dt>벨즈하이볼</dt>
+					<dd>5,000원</dd>
+				</dl>
+				<dl>
+					<dt>モンキーショルダー</dt><dt>몽키숄더</dt>
+					<dd>12,000원</dd>
+				</dl>
+				<dl>
+					<dt>メーカーズマーク</dt><dt>메이커스마크</dt>
+					<dd>13,000원</dd>
+				</dl>
+				<dl>
+					<dt>グレンフィディック 12年</dt><dt>글렌피딕 12년</dt>
+					<dd>21,000원</dd>
+				</dl>
+				<dl>
+					<dt>マッカラン 12年</dt><dt>맥캘란 12년</dt>
+					<dd>23,000원</dd>
+				</dl>
+				<dl>
+					<dt>バルヴェニー 12年</dt><dt>발베니 12년</dt>
+					<dd>24,000원</dd>
+				</dl>
+				<dl>
+					<dt>アードベッグ</dt><dt>아드벡</dt>
+					<dd>25,000원</dd>
+				</dl>
+				<dl>
+					<dt>ジョニーウォーカー ルビー</dt><dt>조니워커 루비</dt>
+					<dd>8,000원</dd>
 				</dl>
 				<dl>
 					<dt>テキーラ</dt><dt>데킬라</dt>
@@ -404,7 +505,7 @@
 				</dl>
 			</div>
 
-			<div class="menu">   
+			<div class="menu" id="cat-whisky-bottle">   
 				<h3>ウイスキーボトル 위스키 바틀 (700ml)</h3>
 				<dl>
 					<dt>ジョニーウォーカーレッド</dt><dt>조니워커  레드</dt>
@@ -422,9 +523,13 @@
 					<dt>ジャックダニエル</dt><dt>잭다니엘</dt>
 					<dd>130,000원</dd>
 				</dl>
+				<dl>
+					<dt>ファイアボール</dt><dt>파이어볼</dt>
+					<dd>150,000원</dd>
+				</dl>
 			</div>
 		
-			<div class="menu">
+			<div class="menu" id="cat-shochu-bottle">
 				<h3>焼酎ボトル 소주바틀 (720ml)</h3>
 				<dl>
 					<dt>よかいち 麦･芋</dt><dt>요카이치 보리/고구마</dt>
@@ -440,7 +545,7 @@
 				</dl>		
 			</div>
 			
-			<div class="menu">
+			<div class="menu" id="cat-food">
 				<h3>おつまみ 안주</h3>
 				<dl>
 					<dt>えだまめ</dt>
@@ -473,88 +578,7 @@
 					<dd>12,000원</dd>
 				</dl>
 			</div>
-			
 
-			
-			<!-- Stylish Notice Card -->
-			<div class="menu-notice-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 22px 20px; margin: 36px auto 20px; max-width: 700px;">
-				<div style="font-size: 13px; font-weight: bold; letter-spacing: 1px; color: #1cb495; margin-bottom: 12px; text-transform: uppercase;">
-					案内事項 <span style="color: rgba(255,255,255,0.4); font-weight: normal; margin-left: 6px;">안내사항</span>
-				</div>
-				<div style="font-size: 13px; line-height: 1.7; color: rgba(255, 255, 255, 0.85); margin-bottom: 14px;">
-					<p style="margin: 0 0 6px; padding-left: 14px; position: relative;">
-						<span style="position: absolute; left: 0; color: #1cb495;">•</span>
-						他のお客様のスペース確保にご協力をお願いいたします。
-					</p>
-					<p style="margin: 0; padding-left: 14px; position: relative;">
-						<span style="position: absolute; left: 0; color: #1cb495;">•</span>
-						他のお客様に不快感を与えたり、案内事項に従っていただけない場合、スタッフの判断で退店および出入り禁止の処置を取らせていただきます。
-					</p>
-				</div>
-				<div style="border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 12px; font-size: 12px; line-height: 1.6; color: rgba(255, 255, 255, 0.55);">
-					<p style="margin: 0 0 4px; padding-left: 14px; position: relative;">
-						<span style="position: absolute; left: 0; color: rgba(255,255,255,0.4);">•</span>
-						다른 손님의 공간 확보를 위해 적극적으로 협조해주셔야 합니다.
-					</p>
-					<p style="margin: 0; padding-left: 14px; position: relative;">
-						<span style="position: absolute; left: 0; color: rgba(255,255,255,0.4);">•</span>
-						다른 손님께 불쾌감을 조성하는 경우와 안내사항에 따르지 않는 경우, 직원의 판단에 의해 퇴장 및 입장금지 처분을 받을 수 있습니다.
-					</p>
-				</div>
-			</div>
-
-			<!-- Stylish Store Info Cards -->
-			<div class="menu-store-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 22px 20px; margin: 0 auto 16px; max-width: 700px;">
-				<div style="margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 10px;">
-					<h4 style="margin: 0 0 6px; font-size: 1.05rem; font-weight: bold; letter-spacing: 1px; color: #fff;">MANKIN HONGDAE</h4>
-					<div style="font-size: 12px; color: #1cb495; font-weight: 500;">OPEN 18:00 - 03:00 / 年中無休</div>
-				</div>
-				<p style="font-size: 12px; color: rgba(255, 255, 255, 0.6); margin: 0 0 12px; line-height: 1.5;">
-					日本語、韓国語、ハンボノで楽しめるジャパニーズバー<br>
-					<span style="color: rgba(255, 255, 255, 0.4);">한국어, 일본어, 한본어 가능한 재페니즈 펍</span>
-				</p>
-				<div style="font-size: 13px; color: rgba(255, 255, 255, 0.8); line-height: 1.8;">
-					<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px;">
-						<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Address</span>
-						<span>서울 마포구 상수동 310-19 2층</span>
-					</div>
-					<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px;">
-						<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Instagram</span>
-						<a href="https://www.instagram.com/mankin_jpkr" target="_blank" style="color: #1cb495; text-decoration: none; font-weight: 500;">@mankin_jpkr ↗</a>
-					</div>
-					<div style="display: flex; gap: 8px; align-items: center;">
-						<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Wi-Fi</span>
-						<span style="font-family: monospace; color: #ddd; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 4px; font-size: 12px;">mankin1234</span>
-					</div>
-				</div>
-			</div>
-
-			<div class="menu-store-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 22px 20px; margin: 0 auto 24px; max-width: 700px;">
-				<div style="margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 10px;">
-					<h4 style="margin: 0 0 6px; font-size: 1.05rem; font-weight: bold; letter-spacing: 1px; color: #fff;">MANKIN MYEONGDONG</h4>
-					<div style="font-size: 12px; color: #1cb495; font-weight: 500;">OPEN 18:00 - 03:00 / 年中無休</div>
-				</div>
-				<p style="font-size: 12px; color: rgba(255, 255, 255, 0.6); margin: 0 0 12px; line-height: 1.5;">
-					プライベートVIPルーム完備のジャパニーズバー<br>
-					<span style="color: rgba(255, 255, 255, 0.4);">프라이빗 VIP룸 완비 재페니즈 바</span>
-				</p>
-				<div style="font-size: 13px; color: rgba(255, 255, 255, 0.8); line-height: 1.8;">
-					<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px;">
-						<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Address</span>
-						<span>서울 중구 저동2가 48-25 4,5층</span>
-					</div>
-					<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px;">
-						<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Instagram</span>
-						<a href="https://www.instagram.com/mankin2_jpkr" target="_blank" style="color: #1cb495; text-decoration: none; font-weight: 500;">@mankin2_jpkr ↗</a>
-					</div>
-					<div style="display: flex; gap: 8px; align-items: center;">
-						<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Wi-Fi</span>
-						<span style="font-family: monospace; color: #ddd; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 4px; font-size: 12px;">mankin1234</span>
-					</div>
-				</div>
-			</div>
-
-		
 			<div class="menu" style="text-align: center; margin-top: 30px;">
 				<a href="index.html" class="button" style="display: inline-block; padding: 12px 28px; border: 1px solid #1cb495; color: #1cb495; text-decoration: none; border-radius: 4px; font-weight: bold;">トップに戻る / 홈으로</a>
 			</div>
@@ -569,7 +593,219 @@
 			</div>
 		</footer>
 
+		<!-- 우상단 햄버거 메뉴: 안내사항·매장정보 드로어 -->
+		<div id="info-backdrop" aria-hidden="true"></div>
+		<aside id="info-drawer" aria-label="案内事項・店舗情報" aria-hidden="true">
+			<div class="drawer-head">
+				<button type="button" id="info-close" class="drawer-close" aria-label="閉じる">&times;</button>
+			</div>
+			<div class="drawer-body">
+	<!-- Stylish Notice Card -->
+				<div class="menu-notice-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 22px 20px; margin: 4px auto 20px; max-width: 700px;">
+					<div style="font-size: 13px; font-weight: bold; letter-spacing: 1px; color: #1cb495; margin-bottom: 12px; text-transform: uppercase;">
+						案内事項 <span style="color: rgba(255,255,255,0.4); font-weight: normal; margin-left: 6px;">안내사항</span>
+					</div>
+					<div style="font-size: 13px; line-height: 1.7; color: rgba(255, 255, 255, 0.85); margin-bottom: 14px;">
+						<p style="margin: 0 0 6px; padding-left: 14px; position: relative;">
+							<span style="position: absolute; left: 0; color: #1cb495;">•</span>
+							他のお客様のスペース確保にご協力をお願いいたします。
+						</p>
+						<p style="margin: 0; padding-left: 14px; position: relative;">
+							<span style="position: absolute; left: 0; color: #1cb495;">•</span>
+							他のお客様に不快感を与えたり、案内事項に従っていただけない場合、スタッフの判断で退店および出入り禁止の処置を取らせていただきます。
+						</p>
+					</div>
+					<div style="border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 12px; font-size: 12px; line-height: 1.6; color: rgba(255, 255, 255, 0.55);">
+						<p style="margin: 0 0 4px; padding-left: 14px; position: relative;">
+							<span style="position: absolute; left: 0; color: rgba(255,255,255,0.4);">•</span>
+							다른 손님의 공간 확보를 위해 적극적으로 협조해주셔야 합니다.
+						</p>
+						<p style="margin: 0; padding-left: 14px; position: relative;">
+							<span style="position: absolute; left: 0; color: rgba(255,255,255,0.4);">•</span>
+							다른 손님께 불쾌감을 조성하는 경우와 안내사항에 따르지 않는 경우, 직원의 판단에 의해 퇴장 및 입장금지 처분을 받을 수 있습니다.
+						</p>
+					</div>
+				</div>
+
+				<!-- Stylish Store Info Cards -->
+				<div class="menu-store-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 22px 20px; margin: 0 auto 16px; max-width: 700px;">
+					<div style="margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 10px;">
+						<h4 style="margin: 0 0 6px; font-size: 1.05rem; font-weight: bold; letter-spacing: 1px; color: #fff;">MANKIN HONGDAE</h4>
+						<div style="font-size: 12px; color: #1cb495; font-weight: 500;">OPEN 18:00 - 03:00 / 年中無休</div>
+					</div>
+					<p style="font-size: 12px; color: rgba(255, 255, 255, 0.6); margin: 0 0 12px; line-height: 1.5;">
+						日本語、韓国語、ハンボノで楽しめるジャパニーズバー<br>
+						<span style="color: rgba(255, 255, 255, 0.4);">한국어, 일본어, 한본어 가능한 재페니즈 펍</span>
+					</p>
+					<div style="font-size: 13px; color: rgba(255, 255, 255, 0.8); line-height: 1.8;">
+						<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px;">
+							<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Address</span>
+							<span>서울 마포구 상수동 310-19 2층</span>
+						</div>
+						<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px;">
+							<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Instagram</span>
+							<a href="https://www.instagram.com/mankin_jpkr" target="_blank" style="color: #1cb495; text-decoration: none; font-weight: 500;">@mankin_jpkr ↗</a>
+						</div>
+						<div style="display: flex; gap: 8px; align-items: center;">
+							<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Wi-Fi</span>
+							<span style="font-family: monospace; color: #ddd; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 4px; font-size: 12px;">mankin1234</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="menu-store-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 22px 20px; margin: 0 auto 24px; max-width: 700px;">
+					<div style="margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 10px;">
+						<h4 style="margin: 0 0 6px; font-size: 1.05rem; font-weight: bold; letter-spacing: 1px; color: #fff;">MANKIN MYEONGDONG</h4>
+						<div style="font-size: 12px; color: #1cb495; font-weight: 500;">OPEN 18:00 - 03:00 / 年中無休</div>
+					</div>
+					<p style="font-size: 12px; color: rgba(255, 255, 255, 0.6); margin: 0 0 12px; line-height: 1.5;">
+						プライベートVIPルーム完備のジャパニーズバー<br>
+						<span style="color: rgba(255, 255, 255, 0.4);">프라이빗 VIP룸 완비 재페니즈 바</span>
+					</p>
+					<div style="font-size: 13px; color: rgba(255, 255, 255, 0.8); line-height: 1.8;">
+						<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px;">
+							<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Address</span>
+							<span>서울 중구 저동2가 48-25 4,5층</span>
+						</div>
+						<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px;">
+							<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Instagram</span>
+							<a href="https://www.instagram.com/mankin2_jpkr" target="_blank" style="color: #1cb495; text-decoration: none; font-weight: 500;">@mankin2_jpkr ↗</a>
+						</div>
+						<div style="display: flex; gap: 8px; align-items: center;">
+							<span style="font-size: 11px; color: #888; width: 68px; text-transform: uppercase;">Wi-Fi</span>
+							<span style="font-family: monospace; color: #ddd; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 4px; font-size: 12px;">mankin1234</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</aside>
+
+		<script>
+		(function () {
+			var drawer = document.getElementById('info-drawer'),
+				backdrop = document.getElementById('info-backdrop'),
+				toggleBtn = document.getElementById('info-toggle'),
+				closeBtn = document.getElementById('info-close');
+			function openDrawer() {
+				drawer.classList.add('open');
+				backdrop.classList.add('open');
+				document.body.classList.add('drawer-open');
+				toggleBtn.setAttribute('aria-expanded', 'true');
+				drawer.setAttribute('aria-hidden', 'false');
+			}
+			function closeDrawer() {
+				drawer.classList.remove('open');
+				backdrop.classList.remove('open');
+				document.body.classList.remove('drawer-open');
+				toggleBtn.setAttribute('aria-expanded', 'false');
+				drawer.setAttribute('aria-hidden', 'true');
+			}
+			toggleBtn.addEventListener('click', function (e) {
+				e.preventDefault();
+				if (drawer.classList.contains('open')) { closeDrawer(); } else { openDrawer(); }
+			});
+			closeBtn.addEventListener('click', closeDrawer);
+			backdrop.addEventListener('click', closeDrawer);
+			document.addEventListener('keydown', function (e) {
+				if (e.key === 'Escape' || e.key === 'Esc') { closeDrawer(); }
+			});
+		})();
+		</script>
+
+		<!-- 우하단 맨 위로 버튼 -->
+		<button type="button" id="to-top" aria-label="ページ上部へ / 맨 위로">↑</button>
+
 		<script src="assets/js/main.js"></script>
+
+		<script>
+		(function () {
+			var nav = document.getElementById('cat-nav'),
+				toTop = document.getElementById('to-top'),
+				inner = nav ? nav.querySelector('.cat-nav-inner') : null,
+				chips = nav ? Array.prototype.slice.call(nav.querySelectorAll('.cat-chip')) : [],
+				current = -1;
+
+			function scrollY() {
+				return Math.max(window.pageYOffset || 0, document.documentElement.scrollTop || 0, document.body.scrollTop || 0);
+			}
+			function maxScroll() {
+				return Math.max(document.documentElement.scrollHeight || 0, document.body.scrollHeight || 0) - window.innerHeight;
+			}
+			function navH() { return nav ? nav.getBoundingClientRect().height : 0; }
+
+			/* window.scrollTo가 먹지 않는 스크롤 구조(html/body height:100%)에서도 동작하도록 매 프레임 세 곳에 동시 적용 */
+			function smoothTo(target) {
+				var start = scrollY(), max = Math.max(0, maxScroll()),
+					dest = Math.min(Math.max(0, target), max),
+					dist = dest - start, t0 = 0, dur = 420;
+				if (Math.abs(dist) < 2) { return; }
+				function step(t) {
+					if (!t0) { t0 = t; }
+					var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3), y = start + dist * e;
+					window.scrollTo(0, y);
+					document.documentElement.scrollTop = y;
+					document.body.scrollTop = y;
+					if (k < 1) { window.requestAnimationFrame(step); }
+				}
+				window.requestAnimationFrame(step);
+			}
+
+			function setActive(i, center) {
+				if (i === current && !center) { return; }
+				current = i;
+				chips.forEach(function (c, j) { c.classList.toggle('active', j === i); });
+				var active = chips[i];
+				if (active && inner) {
+					var cr = active.getBoundingClientRect(), ir = inner.getBoundingClientRect();
+					var delta = (cr.left - ir.left) - (inner.clientWidth - active.offsetWidth) / 2;
+					if (Math.abs(delta) > 4) { inner.scrollTo({ left: inner.scrollLeft + delta, behavior: 'smooth' }); }
+				}
+			}
+
+			function spy() {
+				var y = navH() + 26, idx = 0;
+				for (var i = 0; i < chips.length; i++) {
+					var t = document.getElementById(chips[i].getAttribute('data-target'));
+					if (t && t.getBoundingClientRect().top <= y) { idx = i; }
+				}
+				if (scrollY() >= maxScroll() - 6) { idx = chips.length - 1; }
+				setActive(idx);
+			}
+
+			var ticking = false;
+			function onScroll() {
+				if (toTop) { toTop.classList.toggle('show', scrollY() > 300); }
+				if (ticking) { return; }
+				ticking = true;
+				window.requestAnimationFrame(function () { ticking = false; spy(); });
+			}
+
+			chips.forEach(function (chip, i) {
+				chip.addEventListener('click', function (e) {
+					e.preventDefault();
+					var t = document.getElementById(chip.getAttribute('data-target'));
+					if (!t) { return; }
+					var top = t.getBoundingClientRect().top + scrollY() - navH() - 10;
+					smoothTo(top);
+					setActive(i, true);
+					if (window.history && history.replaceState) { history.replaceState(null, '', '#' + t.id); }
+				});
+			});
+
+			if (toTop) {
+				toTop.addEventListener('click', function () { smoothTo(0); });
+			}
+
+			['scroll', 'wheel', 'touchmove'].forEach(function (ev) {
+				window.addEventListener(ev, onScroll, { passive: true });
+				document.addEventListener(ev, onScroll, { passive: true });
+				if (document.body) { document.body.addEventListener(ev, onScroll, { passive: true }); }
+			});
+			window.addEventListener('resize', spy);
+			spy();
+			onScroll();
+		})();
+		</script>
 
 	</body>
 </html>

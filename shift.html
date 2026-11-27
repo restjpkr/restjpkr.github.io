@@ -1,0 +1,535 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+	<head>
+		<title>나 언제 출근이지?</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" />
+		<meta name="robots" content="noindex, nofollow" />
+		<meta name="theme-color" content="#0d161a" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<link rel="stylesheet" href="assets/css/menu.css" />
+		<style>
+			body {
+				background-color: #0d161a;
+				background-image: none;
+				color: #ffffff;
+				padding: 0;
+				text-align: left;
+				font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans", "Apple SD Gothic Neo", "Noto Sans KR", Roboto, sans-serif;
+				-webkit-font-smoothing: antialiased;
+			}
+			#password-screen {
+				position: fixed;
+				top: 0; left: 0; width: 100%; height: 100%;
+				background-color: #0d161a;
+				z-index: 9999;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				color: white;
+				font-family: sans-serif;
+			}
+			#password-screen h2 {
+				margin-bottom: 20px;
+				font-size: 20px;
+				letter-spacing: 1px;
+			}
+			#password-screen input {
+				background: transparent;
+				border: 1px solid #ffffff;
+				border-radius: 30px;
+				padding: 12px 20px;
+				color: white;
+				font-size: 18px;
+				text-align: center;
+				width: 200px;
+				outline: none;
+				margin-bottom: 15px;
+			}
+			#password-screen button {
+				background-color: #1cb495;
+				color: white;
+				border: none;
+				padding: 10px 30px;
+				font-weight: bold;
+				border-radius: 30px;
+				cursor: pointer;
+				font-size: 16px;
+			}
+			#shift-content { display: none; }
+			#shift-content.on { display: block; }
+			body.picking #shift-content.on {
+				display: flex;
+				min-height: 100vh;
+				min-height: 100dvh;
+			}
+			body.picking .wrap {
+				margin: auto;
+				width: 100%;
+				padding: 52px 12px 44px;
+			}
+
+			.wrap { max-width: 520px; margin: 0 auto; padding: 14px 12px 34px; }
+
+			.top { position: relative; text-align: center; padding: 8px 0 14px; }
+			.top .back {
+				position: absolute; left: 0; top: 18px;
+				display: inline-flex; align-items: center; box-sizing: border-box;
+				height: 42px; padding: 0 14px;
+				font-size: 13px; font-weight: 700; line-height: 1; color: #d6e3e0; text-decoration: none;
+				background: rgba(255,255,255,0.05); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+				border: 1px solid rgba(255,255,255,0.2);
+				border-radius: 4px; white-space: nowrap;
+			}
+			.top h1 { font-size: 18px; font-weight: 700; margin: 0; letter-spacing: 0.01em; line-height: 1.3; }
+			.top p { font-size: 11.5px; color: #7f8f8c; margin: 6px 0 0; letter-spacing: 0.12em; }
+			body.picking .top { padding: 0 0 30px; }
+			body.picking .top h1 { font-size: 27px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; }
+			body.picking .top p { font-size: 12px; margin-top: 10px; }
+			body.picking .top .back { position: fixed; left: 20px; top: 32px; z-index: 10; }
+
+			#picker { margin-top: 6px; }
+			.names { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+			.name-btn {
+				display: flex; flex-direction: column; align-items: center; justify-content: center;
+				min-height: 56px; padding: 9px 4px;
+				background: rgba(255,255,255,0.045);
+				border: 1px solid rgba(255,255,255,0.12);
+				border-radius: 9px;
+				color: #e6efec;
+				font-size: 15px; font-weight: 600;
+				text-align: center; cursor: pointer;
+				font-family: inherit; letter-spacing: -0.01em; line-height: 1.15;
+				-webkit-tap-highlight-color: transparent;
+			}
+			.name-btn .ja { display: block; margin-top: 4px; font-size: 9.5px; font-weight: 400; color: #7f8f8c; letter-spacing: 0; }
+			.name-btn:active { background: rgba(28,180,149,0.22); border-color: #1cb495; }
+			.name-btn.active { background: rgba(28,180,149,0.18); border-color: #1cb495; }
+			.name-btn.boss {
+				grid-column: 1 / -1;
+				min-height: 48px; margin-top: 2px;
+				flex-direction: row; gap: 7px;
+				border-color: rgba(28,180,149,0.4);
+				background: rgba(28,180,149,0.07);
+				color: #d7f2ea;
+			}
+			.name-btn.boss .ja { margin-top: 0; font-size: 10px; color: #6f9d92; }
+
+			.who {
+				display: flex; align-items: baseline; justify-content: space-between;
+				border-bottom: 1px solid rgba(255,255,255,0.1);
+				padding: 0 0 9px; margin: 20px 0 2px;
+			}
+			.who strong { font-size: 19px; font-weight: 700; letter-spacing: 0.01em; }
+			.who span { font-size: 11px; color: #1cb495; letter-spacing: 0.02em; }
+			.month { margin-top: 18px; }
+			.month-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 7px; }
+			.month-head h3 { font-size: 14px; font-weight: 700; letter-spacing: 0.02em; margin: 0; }
+			.month-head .count { font-size: 11px; color: #7f8f8c; }
+			.month-head .count b { color: #1cb495; font-weight: 700; }
+
+			.dow, .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+			.dow i { font-style: normal; font-size: 10px; color: #61716e; text-align: center; padding: 1px 0 4px; }
+
+			.day {
+				position: relative;
+				min-height: 58px;
+				border-radius: 5px;
+				background: rgba(255,255,255,0.022);
+				padding: 4px 1px 3px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				overflow: hidden;
+			}
+			.day.out { background: none; }
+			.day.has-s { background: rgba(28,180,149,0.11); }
+			.day.has-m { background: rgba(167,139,250,0.14); }
+			.day.today { box-shadow: inset 0 0 0 1px #1cb495; }
+			.num {
+				font-size: 11px; color: #8b9b98; line-height: 1;
+				display: flex; align-items: center; justify-content: center;
+				width: 16px; height: 16px; flex: 0 0 16px;
+				margin: 0 auto;
+			}
+			.day.today .num {
+				color: #0d161a; background: #1cb495;
+				border-radius: 999px;
+				font-weight: 700; font-size: 10px;
+			}
+			.ent { display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.2; margin-top: 3px; min-height: 22px; }
+			.ent .st { font-size: 9px; letter-spacing: -0.03em; }
+			.ent .sh { display: block; white-space: nowrap; font-size: 8.5px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; text-align: center; }
+			.ent .sh i { font-style: normal; margin-right: 1px; opacity: 0.9; }
+			.ent .sh.s { color: #1cb495; }
+			.ent .sh.m { color: #a78bfa; }
+			.day.past .sh { opacity: 0.55; }
+			.day.short-s { background: rgba(28,180,149,0.11); }
+			.day.short-m { background: rgba(167,139,250,0.13); }
+			.day.short-b { background: rgba(167,139,250,0.1); }
+			.ent .tm { font-size: 9.5px; color: #ffffff; font-weight: 600; letter-spacing: -0.04em; }
+			.ent .tm.none { color: #7f8f8c; font-weight: 400; }
+			.st.s { color: #2fd0ae; }
+			.st.m { color: #c084fc; }
+			.st.w { color: #8b9b98; }
+
+			.legend { display: flex; gap: 12px; margin: 9px 0 0; font-size: 10px; color: #5d6d6a; }
+			.legend span { display: flex; align-items: center; gap: 4px; }
+			.legend .dot { width: 7px; height: 7px; border-radius: 2px; display: inline-block; }
+			.legend .dot.s { background: rgba(28,180,149,0.55); }
+			.legend .dot.m { background: rgba(192,132,252,0.75); }
+
+			@media (min-width: 460px) {
+				.names { grid-template-columns: repeat(4, 1fr); }
+				.name-btn { min-height: 60px; }
+				.day { min-height: 66px; }
+				body.picking .top h1 { font-size: 30px; }
+				.ent .st { font-size: 10px; }
+				.ent .tm { font-size: 10.5px; }
+				.ent .sh { font-size: 9px; }
+				.num { font-size: 12px; }
+			}
+		
+			/* iOS 안전영역·배경 꽉 채우기 (상태바/툴바 검은 띠 제거) */
+			html, body { background-color: #0d161a; min-height: 100dvh; }
+			.wrap { padding-top: calc(14px + env(safe-area-inset-top)); padding-bottom: calc(34px + env(safe-area-inset-bottom)); }
+			body.picking .top .back { top: calc(32px + env(safe-area-inset-top)); }
+		</style>
+	</head>
+	<body>
+
+		<div id="password-screen">
+			<h2>PASSWORD REQUIRED</h2>
+			<input type="password" id="passInput" inputmode="numeric" autocomplete="off" placeholder="••••">
+			<button onclick="checkPassword()">ENTER</button>
+		</div>
+
+		<div id="shift-content">
+			<div class="wrap">
+
+				<header class="top">
+					<a href="/admin" class="back" id="backTop">TOP</a>
+					<h1>나 언제 출근이지?</h1>
+					<p>出勤カレンダー</p>
+				</header>
+
+				<div id="picker">
+					<div class="names" id="nameList"></div>
+				</div>
+
+				<div id="result" style="display:none;">
+					<div class="who">
+						<strong id="whoName"></strong>
+					</div>
+					<div class="legend">
+						<span><i class="dot s"></i>상수 上水</span>
+						<span><i class="dot m"></i>명동 明洞</span>
+					</div>
+					<div id="months"></div>
+				</div>
+
+			</div>
+		</div>
+
+		<script>
+			var DATA = {"updated":"2026-11-27","months":["2026-11","2026-12"],"source":"만킨 스케쥴 2026/11, 2026/12","staff":[{"name":"필립","days":{"2026-11-01":[{"s":"명동","t":"17:30"}],"2026-11-02":[{"s":"상수","t":"17:30"}],"2026-11-03":[{"s":"명동","t":"17:30"}],"2026-11-05":[{"s":"상수","t":"17:30"}],"2026-11-07":[{"s":"명동","t":"17:30"}],"2026-11-08":[{"s":"상수","t":"17:30"}],"2026-11-09":[{"s":"상수","t":"17:30"}],"2026-11-11":[{"s":"명동","t":"17:30"}],"2026-11-12":[{"s":"명동","t":"17:30"}],"2026-11-13":[{"s":"명동","t":"17:30"}],"2026-11-15":[{"s":"상수","t":"17:30"}],"2026-11-17":[{"s":"상수","t":"17:30"}],"2026-11-18":[{"s":"상수","t":"17:30"}],"2026-11-19":[{"s":"명동","t":"17:30"}],"2026-11-20":[{"s":"명동","t":"17:30"}],"2026-11-23":[{"s":"상수","t":"17:30"}],"2026-11-25":[{"s":"상수","t":"17:30"}],"2026-11-26":[{"s":"상수","t":"17:30"}],"2026-11-28":[{"s":"상수","t":"17:30"}],"2026-11-29":[{"s":"상수","t":"17:30"}],"2026-11-30":[{"s":"상수","t":"17:30"}],"2026-12-01":[{"s":"상수","t":"17:30"}],"2026-12-02":[{"s":"상수","t":"17:30"}],"2026-12-03":[{"s":"상수","t":"17:30"}],"2026-12-04":[{"s":"상수","t":"17:30"}],"2026-12-06":[{"s":"명동","t":"17:30"}],"2026-12-07":[{"s":"상수","t":"17:30"}],"2026-12-08":[{"s":"상수","t":"17:30"}],"2026-12-10":[{"s":"상수","t":"17:30"}],"2026-12-12":[{"s":"상수","t":"17:30"}],"2026-12-13":[{"s":"상수","t":"17:30"}],"2026-12-15":[{"s":"상수","t":"17:30"}],"2026-12-17":[{"s":"명동","t":"17:30"}],"2026-12-18":[{"s":"상수","t":"17:30"}],"2026-12-20":[{"s":"상수","t":"17:30"}],"2026-12-21":[{"s":"명동","t":"17:30"}],"2026-12-23":[{"s":"상수","t":"17:30"}],"2026-12-24":[{"s":"상수","t":"17:30"}],"2026-12-25":[{"s":"상수","t":"17:30"}],"2026-12-26":[{"s":"상수","t":"17:30"}],"2026-12-27":[{"s":"상수","t":"17:30"}],"2026-12-28":[{"s":"명동","t":"17:30"}],"2026-12-29":[{"s":"상수","t":"17:30"}],"2026-12-30":[{"s":"명동","t":"17:30"}],"2026-12-31":[{"s":"상수","t":"17:30"}]}},{"name":"우영","days":{"2026-11-10":[{"s":"명동","t":"19:30"}],"2026-11-11":[{"s":"명동","t":"21:00"}],"2026-11-12":[{"s":"상수","t":"21:00"}],"2026-11-13":[{"s":"명동","t":"20:30"}],"2026-11-17":[{"s":"명동","t":"17:30"}],"2026-11-18":[{"s":"상수","t":"19:30"}],"2026-11-19":[{"s":"상수","t":"21:00"}],"2026-11-20":[{"s":"상수","t":"19:00"}],"2026-11-25":[{"s":"명동","t":"17:30"}],"2026-11-26":[{"s":"상수","t":"21:00"}],"2026-11-27":[{"s":"상수","t":"17:30"}],"2026-12-08":[{"s":"명동","t":"17:30"}],"2026-12-09":[{"s":"상수","t":"17:30"}],"2026-12-10":[{"s":"명동","t":"17:30"}],"2026-12-11":[{"s":"상수","t":"17:30"}]}},{"name":"서윤","days":{"2026-11-01":[{"s":"상수","t":"17:30"}],"2026-11-03":[{"s":"상수","t":"17:30"}],"2026-11-05":[{"s":"명동","t":"17:30"}],"2026-11-06":[{"s":"상수","t":"17:30"}],"2026-11-07":[{"s":"상수","t":"17:30"}],"2026-11-08":[{"s":"명동","t":"17:30"}],"2026-11-09":[{"s":"명동","t":"17:30"}],"2026-11-10":[{"s":"명동","t":"17:30"}],"2026-11-11":[{"s":"상수","t":"17:30"}],"2026-11-12":[{"s":"상수","t":"17:30"}],"2026-11-15":[{"s":"상수","t":"19:30"}],"2026-11-16":[{"s":"적월"}],"2026-11-17":[{"s":"적월"}],"2026-11-18":[{"s":"명동","t":"17:30"}],"2026-11-21":[{"s":"명동","t":"17:30"}],"2026-11-22":[{"s":"상수","t":"17:30"}],"2026-11-23":[{"s":"명동","t":"17:30"}],"2026-11-24":[{"s":"상수","t":"17:30"}],"2026-11-27":[{"s":"명동","t":"17:30"}],"2026-11-28":[{"s":"명동","t":"17:30"}],"2026-11-29":[{"s":"명동","t":"17:30"}],"2026-11-30":[{"s":"명동","t":"17:30"}],"2026-12-01":[{"s":"명동","t":"17:30"}],"2026-12-02":[{"s":"명동","t":"17:30"}],"2026-12-03":[{"s":"명동","t":"17:30"}],"2026-12-04":[{"s":"명동","t":"17:30"}],"2026-12-05":[{"s":"상수","t":"17:30"}],"2026-12-07":[{"s":"명동","t":"17:30"}],"2026-12-09":[{"s":"명동","t":"17:30"}],"2026-12-11":[{"s":"명동","t":"17:30"}],"2026-12-12":[{"s":"명동","t":"17:30"}],"2026-12-13":[{"s":"명동","t":"17:30"}],"2026-12-14":[{"s":"상수","t":"17:30"}],"2026-12-15":[{"s":"명동","t":"17:30"}],"2026-12-16":[{"s":"명동","t":"17:30"}],"2026-12-17":[{"s":"상수","t":"17:30"}],"2026-12-19":[{"s":"상수","t":"17:30"}],"2026-12-20":[{"s":"명동","t":"17:30"}],"2026-12-21":[{"s":"상수","t":"17:30"}],"2026-12-22":[{"s":"상수","t":"17:30"}],"2026-12-23":[{"s":"명동","t":"17:30"}],"2026-12-24":[{"s":"명동","t":"17:30"}],"2026-12-26":[{"s":"명동","t":"17:30"}],"2026-12-27":[{"s":"명동","t":"17:30"}],"2026-12-28":[{"s":"상수","t":"17:30"}],"2026-12-29":[{"s":"명동","t":"17:30"}],"2026-12-30":[{"s":"상수","t":"17:30"}],"2026-12-31":[{"s":"명동","t":"17:30"}]}},{"name":"선아","days":{"2026-11-01":[{"s":"상수","t":"21:00"}],"2026-11-04":[{"s":"상수","t":"21:00"}],"2026-11-05":[{"s":"명동","t":"19:30"}],"2026-11-06":[{"s":"상수","t":"19:00"}],"2026-11-07":[{"s":"상수","t":"19:00"}],"2026-11-08":[{"s":"명동","t":"19:30"}],"2026-11-09":[{"s":"명동","t":"19:30"}],"2026-11-10":[{"s":"상수","t":"21:00"}],"2026-11-13":[{"s":"명동","t":"19:00"}],"2026-11-14":[{"s":"명동","t":"19:00"}],"2026-11-15":[{"s":"상수","t":"21:00"}],"2026-11-16":[{"s":"명동","t":"19:30"}],"2026-11-20":[{"s":"상수","t":"20:30"}],"2026-11-21":[{"s":"명동","t":"19:00"}],"2026-11-22":[{"s":"명동","t":"17:30"}],"2026-11-23":[{"s":"명동","t":"19:30"}],"2026-11-24":[{"s":"상수","t":"19:30"}],"2026-11-26":[{"s":"명동","t":"21:00"}],"2026-11-27":[{"s":"명동","t":"19:00"}],"2026-11-28":[{"s":"상수","t":"20:30"}],"2026-11-29":[{"s":"명동","t":"19:30"}],"2026-11-30":[{"s":"상수","t":"19:30"}],"2026-12-01":[{"s":"명동","t":"19:30"}],"2026-12-02":[{"s":"상수","t":"21:30"}],"2026-12-04":[{"s":"명동","t":"20:30"}],"2026-12-06":[{"s":"상수","t":"21:00"}],"2026-12-07":[{"s":"상수","t":"21:00"}],"2026-12-09":[{"s":"명동","t":"21:00"}],"2026-12-10":[{"s":"명동","t":"19:30"}],"2026-12-12":[{"s":"명동","t":"20:30"}],"2026-12-14":[{"s":"상수","t":"21:00"}],"2026-12-15":[{"s":"명동","t":"21:00"}],"2026-12-17":[{"s":"상수","t":"21:00"}],"2026-12-18":[{"s":"명동","t":"19:00"}],"2026-12-19":[{"s":"상수","t":"20:30"}],"2026-12-21":[{"s":"상수","t":"21:00"}],"2026-12-22":[{"s":"명동","t":"19:30"}],"2026-12-24":[{"s":"상수","t":"19:30"}],"2026-12-25":[{"s":"상수","t":"20:30"}],"2026-12-26":[{"s":"상수","t":"20:30"}],"2026-12-27":[{"s":"명동","t":"19:30"}],"2026-12-28":[{"s":"상수","t":"21:00"}],"2026-12-29":[{"s":"상수","t":"21:00"}],"2026-12-31":[{"s":"명동","t":"19:30"}]}},{"name":"헤라","days":{"2026-11-26":[{"s":"상수","t":"19:30"}],"2026-11-29":[{"s":"상수","t":"19:30"}],"2026-12-16":[{"s":"상수","t":"19:30"}],"2026-12-17":[{"s":"상수","t":"19:30"}],"2026-12-18":[{"s":"상수","t":"19:00"}],"2026-12-23":[{"s":"상수","t":"21:00"}],"2026-12-27":[{"s":"상수","t":"21:00"}]}},{"name":"지우","days":{"2026-11-06":[{"s":"상수","t":"21:30"}],"2026-11-07":[{"s":"상수","t":"21:30"}],"2026-11-14":[{"s":"상수","t":"21:30"}],"2026-11-21":[{"s":"상수","t":"21:30"}],"2026-11-25":[{"s":"상수","t":"21:00"}],"2026-12-01":[{"s":"명동","t":"21:00"}],"2026-12-05":[{"s":"명동","t":"19:00"}],"2026-12-12":[{"s":"상수","t":"19:00","last":1}]}},{"name":"채린","days":{"2026-11-02":[{"s":"상수","t":"21:00"}],"2026-11-07":[{"s":"상수","t":"20:30"}],"2026-11-09":[{"s":"상수","t":"21:00"}],"2026-11-14":[{"s":"상수","t":"19:00"}],"2026-11-16":[{"s":"상수","t":"21:00"}],"2026-11-20":[{"s":"명동","t":"20:30"}],"2026-11-21":[{"s":"상수","t":"19:00"}],"2026-11-23":[{"s":"상수","t":"21:00"}],"2026-11-27":[{"s":"상수","t":"19:00"}],"2026-11-28":[{"s":"상수","t":"19:00"}],"2026-11-30":[{"s":"상수","t":"21:00"}],"2026-12-01":[{"s":"상수","t":"21:00"}],"2026-12-04":[{"s":"상수","t":"19:00"}],"2026-12-05":[{"s":"상수","t":"20:30"}],"2026-12-06":[{"s":"상수","t":"19:30"}],"2026-12-07":[{"s":"명동","t":"21:00"}],"2026-12-08":[{"s":"상수","t":"19:30"}],"2026-12-11":[{"s":"명동","t":"19:00"}],"2026-12-12":[{"s":"상수","t":"20:30"}],"2026-12-13":[{"s":"상수","t":"19:30"}],"2026-12-14":[{"s":"명동","t":"17:30"}],"2026-12-18":[{"s":"명동","t":"17:30"}],"2026-12-19":[{"s":"명동","t":"17:30"}],"2026-12-20":[{"s":"명동","t":"19:30"}],"2026-12-21":[{"s":"명동","t":"19:30"}],"2026-12-22":[{"s":"명동","t":"17:30"}],"2026-12-25":[{"s":"명동","t":"17:30"}],"2026-12-26":[{"s":"상수","t":"19:00"}],"2026-12-27":[{"s":"상수","t":"19:30"}],"2026-12-28":[{"s":"명동","t":"19:30"}]}},{"name":"한빈","days":{"2026-11-01":[{"s":"명동","t":"19:30"}],"2026-11-06":[{"s":"명동","t":"21:30"}],"2026-11-08":[{"s":"상수","t":"21:00"}],"2026-11-11":[{"s":"명동","t":"19:30"}],"2026-11-12":[{"s":"명동","t":"19:30"}],"2026-11-13":[{"s":"상수","t":"20:30"}],"2026-11-17":[{"s":"상수","t":"21:00"}],"2026-11-20":[{"s":"명동","t":"19:30"}],"2026-11-22":[{"s":"명동","t":"21:00"}],"2026-11-23":[{"s":"상수","t":"19:30"}],"2026-11-24":[{"s":"명동","t":"19:30"}],"2026-12-08":[{"s":"명동","t":"21:00"}],"2026-12-11":[{"s":"명동","t":"20:30"}],"2026-12-18":[{"s":"상수","t":"20:30"}]}},{"name":"원희","days":{"2026-11-22":[{"s":"상수","t":"19:30"}],"2026-11-23":[{"s":"명동","t":"21:00"}],"2026-11-24":[{"s":"상수","t":"21:00"}],"2026-11-25":[{"s":"상수","t":"19:30"}],"2026-11-28":[{"s":"상수","t":"21:30"}],"2026-11-29":[{"s":"명동","t":"21:00"}],"2026-11-30":[{"s":"명동","t":"19:30"}],"2026-12-03":[{"s":"명동","t":"21:00"}],"2026-12-04":[{"s":"상수","t":"21:30"}],"2026-12-05":[{"s":"상수","t":"19:00"}],"2026-12-06":[{"s":"명동","t":"19:30"}],"2026-12-07":[{"s":"상수","t":"19:30"}],"2026-12-09":[{"s":"상수","t":"19:30"}],"2026-12-10":[{"s":"상수","t":"19:30"}],"2026-12-11":[{"s":"상수","t":"20:30"}],"2026-12-13":[{"s":"명동","t":"19:30"}],"2026-12-14":[{"s":"상수","t":"19:30"}],"2026-12-15":[{"s":"명동","t":"19:30"}],"2026-12-16":[{"s":"상수","t":"21:00"}],"2026-12-18":[{"s":"상수","t":"21:30"}],"2026-12-20":[{"s":"상수","t":"19:30"}],"2026-12-22":[{"s":"상수","t":"19:30"}],"2026-12-23":[{"s":"명동","t":"19:30"}],"2026-12-24":[{"s":"상수","t":"21:00"}],"2026-12-25":[{"s":"상수","t":"19:00"}],"2026-12-26":[{"s":"명동","t":"19:30"}],"2026-12-28":[{"s":"상수","t":"19:30"}],"2026-12-29":[{"s":"상수","t":"19:30"}],"2026-12-30":[{"s":"상수","t":"19:30"}],"2026-12-31":[{"s":"상수","t":"19:30"}]}},{"name":"사쿠라","days":{"2026-11-03":[{"s":"상수","t":"21:00"}],"2026-11-04":[{"s":"상수","t":"17:30"}],"2026-11-06":[{"s":"명동","t":"19:00"}],"2026-11-07":[{"s":"명동","t":"19:00"}],"2026-11-10":[{"s":"명동","t":"21:00"}],"2026-11-11":[{"s":"상수","t":"21:00"}],"2026-11-13":[{"s":"상수","t":"21:30"}],"2026-11-14":[{"s":"명동","t":"17:30"}],"2026-11-16":[{"s":"상수","t":"17:30"}],"2026-11-17":[{"s":"상수","t":"19:30"}],"2026-11-18":[{"s":"명동","t":"19:30"}],"2026-11-24":[{"s":"명동","t":"17:30"}],"2026-11-25":[{"s":"명동","t":"19:30"}],"2026-12-02":[{"s":"명동","t":"19:30"}],"2026-12-03":[{"s":"상수","t":"19:30"}],"2026-12-04":[{"s":"명동","t":"19:00"}],"2026-12-05":[{"s":"명동","t":"17:30"}],"2026-12-08":[{"s":"명동","t":"19:30"}],"2026-12-11":[{"s":"상수","t":"19:00"}],"2026-12-12":[{"s":"명동","t":"19:00"}],"2026-12-18":[{"s":"명동","t":"19:00"}],"2026-12-19":[{"s":"명동","t":"19:00"}]}},{"name":"세이야","days":{"2026-11-01":[{"s":"명동","t":"21:00"}],"2026-11-02":[{"s":"상수","t":"19:30"}],"2026-11-03":[{"s":"명동","t":"19:30"}],"2026-11-04":[{"s":"상수","t":"19:30"}],"2026-11-08":[{"s":"명동","t":"21:00"}],"2026-11-10":[{"s":"상수","t":"19:30"}],"2026-11-11":[{"s":"상수","t":"19:30"}],"2026-11-12":[{"s":"상수","t":"19:30"}],"2026-11-18":[{"s":"명동","t":"21:30"}],"2026-11-19":[{"s":"명동","t":"21:00"}],"2026-11-20":[{"s":"상수","t":"21:30"}],"2026-11-22":[{"s":"상수","t":"21:00"}],"2026-11-26":[{"s":"명동","t":"17:30"}],"2026-11-27":[{"s":"상수","t":"20:30"}],"2026-11-28":[{"s":"명동","t":"19:30"}],"2026-11-29":[{"s":"상수","t":"21:00"}],"2026-11-30":[{"s":"명동","t":"21:00"}],"2026-12-02":[{"s":"명동","t":"21:00"}],"2026-12-03":[{"s":"명동","t":"19:30"}],"2026-12-04":[{"s":"상수","t":"20:30"}],"2026-12-06":[{"s":"상수","t":"17:30"}],"2026-12-07":[{"s":"명동","t":"19:30"}],"2026-12-09":[{"s":"명동","t":"19:30"}],"2026-12-10":[{"s":"명동","t":"21:00"}],"2026-12-13":[{"s":"상수","t":"21:00"}],"2026-12-14":[{"s":"명동","t":"19:30"}],"2026-12-15":[{"s":"상수","t":"21:00"}],"2026-12-16":[{"s":"상수","t":"17:30"}],"2026-12-18":[{"s":"명동","t":"20:30"}],"2026-12-19":[{"s":"상수","t":"19:00","last":1}]}},{"name":"하이디","days":{"2026-12-01":[{"s":"상수","t":"19:30"}],"2026-12-02":[{"s":"상수","t":"19:30"}],"2026-12-03":[{"s":"상수","t":"21:00"}],"2026-12-08":[{"s":"상수","t":"21:00"}],"2026-12-09":[{"s":"상수","t":"21:00"}],"2026-12-10":[{"s":"상수","t":"21:00"}],"2026-12-15":[{"s":"상수","t":"19:30"}],"2026-12-16":[{"s":"명동","t":"19:30"}],"2026-12-17":[{"s":"명동","t":"19:30"}],"2026-12-21":[{"s":"상수","t":"19:30"}],"2026-12-22":[{"s":"상수","t":"21:00"}],"2026-12-23":[{"s":"상수","t":"19:30"}],"2026-12-29":[{"s":"명동","t":"19:30"}],"2026-12-30":[{"s":"명동","t":"19:30"}]}},{"name":"안","days":{"2026-11-01":[{"s":"상수","t":"19:30"}],"2026-11-02":[{"s":"명동","t":"17:30"}],"2026-11-03":[{"s":"상수","t":"19:30"}],"2026-11-04":[{"s":"명동","t":"17:30"}],"2026-11-05":[{"s":"상수","t":"19:30"}],"2026-11-06":[{"s":"명동","t":"17:30"}],"2026-11-07":[{"s":"명동","t":"20:30"}],"2026-11-13":[{"s":"상수","t":"19:00"}],"2026-11-14":[{"s":"상수","t":"17:30"}],"2026-11-15":[{"s":"명동","t":"17:30"}],"2026-11-16":[{"s":"명동","t":"17:30"}],"2026-11-19":[{"s":"상수","t":"17:30"}],"2026-11-20":[{"s":"상수","t":"17:30"}],"2026-11-21":[{"s":"상수","t":"17:30","last":1}]}},{"name":"류키","days":{"2026-11-02":[{"s":"명동","t":"21:00"}],"2026-11-04":[{"s":"명동","t":"21:00"}],"2026-11-05":[{"s":"명동","t":"21:00"}],"2026-11-08":[{"s":"상수","t":"19:30"}],"2026-11-09":[{"s":"상수","t":"19:30"}],"2026-11-10":[{"s":"상수","t":"17:30"}],"2026-11-13":[{"s":"명동","t":"21:30"}],"2026-11-15":[{"s":"명동","t":"19:30"}],"2026-11-16":[{"s":"상수","t":"19:30"}],"2026-11-17":[{"s":"명동","t":"19:30"}],"2026-11-18":[{"s":"상수","t":"21:00"}],"2026-11-19":[{"s":"상수","t":"19:30"}]}}]};
+		</script>
+		<script>
+			(function () {
+				var NAME_JA = {
+					'필립': 'フィリップ', '안': 'アン', '우영': 'ウヨン', '서윤': 'ソユン',
+					'류키': 'リュキ', '선아': 'ソナ', '헤라': 'ヘラ', '지우': 'ジウ',
+					'채린': 'チェリン', '한빈': 'ハンビン', '사쿠라': 'サクラ',
+					'세이야': 'セイヤ', '원희': 'ウォニ', '하이디': 'ハイジ'
+				};
+				var STORE_CLASS = { '상수': 's', '명동': 'm', '적월': 'w' };
+				var STORE_JA = { '상수': '上水', '명동': '明洞', '적월': '赤月' };
+				var BOSS = '부족';
+
+				var passInput = document.getElementById('passInput');
+				var content = document.getElementById('shift-content');
+				var nameList = document.getElementById('nameList');
+				var result = document.getElementById('result');
+				var whoName = document.getElementById('whoName');
+				var monthsEl = document.getElementById('months');
+				var picker = document.getElementById('picker');
+				var backTop = document.getElementById('backTop');
+				var current = null;
+
+				function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+				function todayKey() {
+					var t = new Date();
+					return t.getFullYear() + '-' + pad2(t.getMonth() + 1) + '-' + pad2(t.getDate());
+				}
+
+				function checkPassword() {
+					if (passInput.value.trim() === '2580') {
+						document.getElementById('password-screen').style.display = 'none';
+						content.classList.add('on');
+						init();
+					} else {
+						alert('Wrong Password');
+					}
+				}
+				window.checkPassword = checkPassword;
+
+				passInput.addEventListener('keypress', function (e) {
+					if (e.key === 'Enter') { checkPassword(); }
+				});
+
+				function init() {
+					buildNames();
+					showNamePicker(false);
+					backTop.addEventListener('click', function (ev) {
+						if (document.body.classList.contains('picking')) { return; }
+						ev.preventDefault();
+						showNamePicker(true);
+					});
+				}
+
+				function showNamePicker(scrollTop) {
+					result.style.display = 'none';
+					picker.style.display = 'block';
+					backTop.textContent = 'TOP';
+					document.body.classList.add('picking');
+					var btns = nameList.querySelectorAll('.name-btn');
+					for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
+					if (scrollTop !== false) { window.scrollTo(0, 0); }
+				}
+
+				function findPerson(name) {
+					for (var i = 0; i < DATA.staff.length; i++) {
+						if (DATA.staff[i].name === name) { return DATA.staff[i]; }
+					}
+					return null;
+				}
+
+				function buildNames() {
+					var html = '';
+					for (var i = 0; i < DATA.staff.length; i++) {
+						var p = DATA.staff[i];
+						html += '<button type="button" class="name-btn" data-name="' + p.name + '">' +
+							'<span class="ko">' + p.name + '</span>' +
+							'<span class="ja">' + (NAME_JA[p.name] || '') + '</span>' +
+							'</button>';
+					}
+					html += '<button type="button" class="name-btn boss" data-name="' + BOSS + '">' +
+						'<span class="ko">' + BOSS + '</span>' +
+						'<span class="ja">不足</span>' +
+						'</button>';
+					nameList.innerHTML = html;
+					var btns = nameList.querySelectorAll('.name-btn');
+					for (var j = 0; j < btns.length; j++) {
+						btns[j].addEventListener('click', function () {
+							select(this.getAttribute('data-name'));
+						});
+					}
+				}
+
+				function select(name) {
+					if (name !== BOSS) {
+						var p = findPerson(name);
+						if (!p) { return; }
+					}
+					current = name;
+					var btns = nameList.querySelectorAll('.name-btn');
+					for (var i = 0; i < btns.length; i++) {
+						btns[i].classList.toggle('active', btns[i].getAttribute('data-name') === name);
+					}
+					whoName.textContent = name;
+					if (name === BOSS) { renderShortage(); } else { render(findPerson(name)); }
+					picker.style.display = 'none';
+					document.body.classList.remove('picking');
+					backTop.textContent = '← 이름 변경';
+					result.style.display = 'block';
+					window.scrollTo(0, 0);
+				}
+
+				/* ---------- 부족 시간 (점장) ---------- */
+				var NEED_A = ['17:30', '19:30', '21:00'];
+				var NEED_B = ['17:30', '19:00', '20:30', '21:30'];
+
+				function needSlots(key) {
+					var parts = key.split('-');
+					var dow = new Date(+parts[0], +parts[1] - 1, +parts[2]).getDay();
+					return (dow === 5 || dow === 6) ? NEED_B : NEED_A;
+				}
+
+				function buildShortage() {
+					var table = {};
+					for (var i = 0; i < DATA.staff.length; i++) {
+						var days = DATA.staff[i].days;
+						for (var key in days) {
+							if (!Object.prototype.hasOwnProperty.call(days, key)) { continue; }
+							if (DATA.months.indexOf(key.slice(0, 7)) < 0) { continue; }
+							var ents = days[key];
+							for (var j = 0; j < ents.length; j++) {
+								var e = ents[j];
+								if ((e.s === '상수' || e.s === '명동') && e.t) {
+									table[key] = table[key] || { '상수': [], '명동': [] };
+									table[key][e.s].push(e.t);
+								}
+							}
+						}
+					}
+					var out = {};
+					for (var k in table) {
+						if (!Object.prototype.hasOwnProperty.call(table, k)) { continue; }
+						var need = needSlots(k);
+						var miss = {};
+						var stores = ['상수', '명동'];
+						for (var s = 0; s < stores.length; s++) {
+							var st = stores[s];
+							var have = table[k][st] || [];
+							var lack = [];
+							for (var n = 0; n < need.length; n++) {
+								if (have.indexOf(need[n]) < 0) { lack.push(need[n]); }
+							}
+							if (lack.length) { miss[st] = lack; }
+						}
+						if (miss['상수'] || miss['명동']) { out[k] = miss; }
+					}
+					return out;
+				}
+
+				function renderShortage() {
+					var tk = todayKey();
+					var short = buildShortage();
+					var html = '';
+					for (var m = 0; m < DATA.months.length; m++) {
+						html += monthCardShort(DATA.months[m], short, tk).html;
+					}
+					monthsEl.innerHTML = html;
+				}
+
+				function monthCardShort(ym, short, tk) {
+					var y = +ym.slice(0, 4);
+					var mo = +ym.slice(5, 7);
+					var startDow = new Date(y, mo - 1, 1).getDay();
+					var total = new Date(y, mo, 0).getDate();
+					var cells = [];
+					var count = 0;
+					var i;
+
+					for (i = 0; i < startDow; i++) { cells.push('<div class="day out"></div>'); }
+
+					for (var d = 1; d <= total; d++) {
+						var key = ym + '-' + pad2(d);
+						var miss = short[key] || null;
+						var s = miss && miss['상수'];
+						var mn = miss && miss['명동'];
+						var cls = 'day';
+						if (s && mn) { cls += ' short-b'; }
+						else if (s) { cls += ' short-s'; }
+						else if (mn) { cls += ' short-m'; }
+						if (key === tk) { cls += ' today'; }
+						if (key < tk) { cls += ' past'; }
+						if (s || mn) { count++; }
+
+						var inner = '<span class="num">' + d + '</span>';
+						if (s || mn) {
+							var lines = '';
+							var si, mi;
+							for (si = 0; si < (s ? s.length : 0); si++) {
+								lines += '<span class="sh s"><i>상</i>' + s[si] + '</span>';
+							}
+							for (mi = 0; mi < (mn ? mn.length : 0); mi++) {
+								lines += '<span class="sh m"><i>명</i>' + mn[mi] + '</span>';
+							}
+							inner += '<span class="ent">' + lines + '</span>';
+						} else {
+							inner += '<span class="ent"></span>';
+						}
+						cells.push('<div class="' + cls + '">' + inner + '</div>');
+					}
+
+					var tail = (startDow + total) % 7;
+					if (tail !== 0) {
+						for (i = tail; i < 7; i++) { cells.push('<div class="day out"></div>'); }
+					}
+
+					var head = '<div class="month">' +
+						'<div class="month-head"><h3>' + y + '년 ' + mo + '월</h3>' +
+						'<span class="count">부족 <b>' + count + '</b>일</span></div>' +
+						'<div class="dow"><i>일</i><i>월</i><i>화</i><i>수</i><i>목</i><i>금</i><i>토</i></div>' +
+						'<div class="grid">' + cells.join('') + '</div></div>';
+
+					return { html: head, count: count };
+				}
+
+				function render(p) {
+					var tk = todayKey();
+					var html = '';
+					for (var m = 0; m < DATA.months.length; m++) {
+						var ym = DATA.months[m];
+						var mc = monthCard(ym, p, tk);
+						html += mc.html;
+					}
+					monthsEl.innerHTML = html;
+				}
+
+				function monthCard(ym, p, tk) {
+					var y = +ym.slice(0, 4);
+					var mo = +ym.slice(5, 7);
+					var startDow = new Date(y, mo - 1, 1).getDay();
+					var total = new Date(y, mo, 0).getDate();
+					var cells = [];
+					var count = 0;
+					var i;
+
+					for (i = 0; i < startDow; i++) { cells.push('<div class="day out"></div>'); }
+
+					for (var d = 1; d <= total; d++) {
+						var key = ym + '-' + pad2(d);
+						var ents = p.days[key] || [];
+						var cls = 'day';
+						var hasS = false, hasAny = false;
+
+						for (i = 0; i < ents.length; i++) {
+							if (ents[i].s === '상수') { hasS = true; }
+							if (ents[i].s) { hasAny = true; }
+						}
+						if (hasS) { cls += ' has-s'; }
+						else if (hasAny) { cls += ' has-m'; }
+						if (key === tk) { cls += ' today'; }
+						if (hasAny) { count++; }
+
+						var inner = '<span class="num">' + d + '</span>';
+						for (i = 0; i < ents.length; i++) {
+							var e = ents[i];
+							if (e.x === 'c') {
+								inner += '<span class="ent"><span class="tm none">?</span></span>';
+							} else {
+								var sc = STORE_CLASS[e.s] || 'w';
+								var sj = STORE_JA[e.s] || '';
+								inner += '<span class="ent" title="' + (sj || '') + '">' +
+									'<span class="st ' + sc + '">' + e.s + '</span>' +
+									(e.t ? '<span class="tm">' + e.t + '</span>' : '<span class="tm none">—</span>') +
+									'</span>';
+							}
+						}
+						if (ents.length === 0) { inner += '<span class="ent"></span>'; }
+						cells.push('<div class="' + cls + '">' + inner + '</div>');
+					}
+
+					var tail = (startDow + total) % 7;
+					if (tail !== 0) {
+						for (i = tail; i < 7; i++) { cells.push('<div class="day out"></div>'); }
+					}
+
+					var head = '<div class="month">' +
+						'<div class="month-head"><h3>' + y + '년 ' + mo + '월</h3>' +
+						'<span class="count">출근 <b>' + count + '</b>일</span></div>' +
+						'<div class="dow"><i>일</i><i>월</i><i>화</i><i>수</i><i>목</i><i>금</i><i>토</i></div>' +
+						'<div class="grid">' + cells.join('') + '</div></div>';
+
+					return { html: head, count: count };
+				}
+			})();
+		</script>
+	</body>
+</html>
